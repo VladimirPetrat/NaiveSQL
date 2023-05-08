@@ -1,0 +1,32 @@
+# Compiled class file
+target/
+
+# IDE files
+.idea/
+*.iml
+*.ipr
+*.iws
+.classpath
+.project
+settings.xml
+
+# Build artifacts
+dependency-reduced-pom.xml
+misc.xml
+compiler.xml
+jarRepositories.xml
+workspace.xml
+buildNumber.properties
+build.properties
+*.jar
+*.war
+*.ear
+
+# Test results
+test-output/
+failsafe*.properties
+surefire*.properties
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
