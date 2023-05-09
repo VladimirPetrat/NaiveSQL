@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Person {
 
     //list of Strings for holding data
-    List<String> fields = new ArrayList<String>();
+    private List<String> fields = new ArrayList<String>();
 
     //Constructor for adding fields into the list
     public Person(String id, String name, String year){
@@ -25,5 +25,4 @@ public class Person {
             i++;
         }
     }
-
 }
