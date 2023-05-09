@@ -1,17 +1,29 @@
 package models;
 
-import lombok.AllArgsConstructor;
+import java.util.List;
+import java.util.ArrayList;
 
-@AllArgsConstructor
 public class Person {
 
-    //fields
-    String id;
-    String name;
-    String yearOfBirth;
+    //list of Strings for holding data
+    List<String> fields = new ArrayList<String>();
+
+    //Constructor for adding fields into the list
+    public Person(String id, String name, String year){
+        fields.add(id);
+        fields.add(name);
+        fields.add(year);
+    }
 
     //output function
     public void printPerson(){
-        System.out.println("id: " + this.id + "\nname: " + this.name + "\nyear of birth: " + this.yearOfBirth);
+
+        int i = 0;
+        //loop for outputting info
+        while(i < fields.size()){
+            System.out.println(fields.get(i));
+            i++;
+        }
     }
+
 }
