@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Person {
-    
 
     //list of Strings for holding data
     private List<String> fields = new ArrayList<String>();
