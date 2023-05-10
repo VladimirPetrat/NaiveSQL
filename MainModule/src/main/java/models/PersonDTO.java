@@ -3,7 +3,7 @@ package models;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Person {
+public class PersonDTO {
 
     /**
      * A list of Strings to hold the person's information.
@@ -11,9 +11,9 @@ public class Person {
     private List<String> fields;
 
     /**
-     * fields
+     * Fields
      */
-    String id, name, year;
+    private String id, name, year;
 
     /**
      * Constructs a Person object with the given id, name, and year information.
@@ -21,10 +21,40 @@ public class Person {
      * @param name the person's name
      * @param year the year the person was born
      */
-    public Person(String id, String name, String year){
+    public PersonDTO(String id, String name, String year){
         this.fields = null;
         this.id = id;
         this.name = name;
+        this.year = year;
+    }
+
+    /**
+     * Getters
+     */
+    public String getId(){
+        return id;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getYear(){
+        return year;
+    }
+
+    /**
+     * Setters
+     */
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setYear(String year){
         this.year = year;
     }
 
