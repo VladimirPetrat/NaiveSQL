@@ -1,76 +1,44 @@
 package models;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashMap;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
 public class PersonDTO {
-
-    /**
-     * A list of Strings to hold the person's information.
-     */
-    private List<String> fields;
-
     /**
      * Fields
      */
-    private String id, name, year;
+    private HashMap<String, String> fields;
 
     /**
-     * Constructs a Person object with the given id, name, and year information.
-     * @param id the person's id
-     * @param name the person's name
-     * @param year the year the person was born
+     * Constructor
      */
-    public PersonDTO(String id, String name, String year){
-        this.fields = null;
-        this.id = id;
-        this.name = name;
-        this.year = year;
+    public PersonDTO(String id, String name, String year) {
+        this.fields = new HashMap<>();
+        this.fields.put("id", id);
+        this.fields.put("name", name);
+        this.fields.put("year", year);
     }
 
     /**
-     * Getters
+     * Returns the person's information as a map of key-value pairs.
+     *
+     * @return a map of key-value pairs representing the person's information
      */
-    public String getId(){
-        return id;
-    }
-
-    public String getName(){
-        return name;
-    }
-
-    public String getYear(){
-        return year;
+    public HashMap<String, String> getFields() {
+        return fields;
     }
 
     /**
-     * Setters
-     */
-    public void setId(String id){
-        this.id = id;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public void setYear(String year){
-        this.year = year;
-    }
-
-    /**
-     * Prints the person's information.
+     * Prints the person's information to the console.
      */
     public void printPerson() {
-        if (this.fields == null) {
-            this.fields = new ArrayList<String>();
-            this.fields.add(this.id);
-            this.fields.add(this.name);
-            this.fields.add(this.year);
-        }
-        for (String field : this.fields) {
-            System.out.println(field);
+        HashMap<String, String> fields = getFields();
+        for (String key : fields.keySet()) {
+            System.out.println(key + ": " + fields.get(key));
         }
     }
 }
-
