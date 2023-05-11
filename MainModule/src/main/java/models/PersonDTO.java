@@ -22,16 +22,8 @@ public class PersonDTO {
         return fields;
     }
 
-    public String returnId(){
-        return fields.get("id");
-    }
-
-    public String returnName(){
-        return fields.get("name");
-    }
-
-    public String returnYear(){
-        return fields.get("year");
+    public String returnField(String field){
+        return fields.get(field);
     }
 
     private void operationReplace(String field, String newField){
@@ -42,15 +34,7 @@ public class PersonDTO {
         }
     }
 
-    public void replaceID(String newId){
-        operationReplace("id", newId);
-    }
-
-    public void replaceName(String newName){
-        operationReplace("name", newName);
-    }
-
-    public void replaceYear(String newYear){
-        operationReplace("year", newYear);
+    public void replaceField(String field, String newContent){
+        operationReplace(field, newContent);
     }
 }

@@ -8,13 +8,13 @@ public class StartClass {
 
         System.out.println(me.returnPersonDTO());
 
-        me.replaceID("2");
-        me.replaceName("Andrew");
-        me.replaceYear("1999");
+        me.replaceField("id", "2");
+        me.replaceField("name", "Andrew");
+        me.replaceField("year", "1999");
         System.out.println(me.returnPersonDTO());
 
-        System.out.println("\nID = " + me.returnId() +
-                            "\nName = " + me.returnName()+
-                            "\nYear = " + me.returnYear());
+        System.out.println("\nID = " + me.returnField("id") +
+                            "\nName = " + me.returnField("name")+
+                            "\nYear = " + me.returnField("year"));
     }
 }
