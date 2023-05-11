@@ -18,10 +18,7 @@ public class PersonDTO {
         this.fields.put("year", year);
     }
 
-    @Override
-    public String toString() {
-        return "PersonDTO{" +
-                "fields=" + fields +
-                '}';
+    public HashMap<String, String> returnPersonDTO(){
+        return fields;
     }
 }
