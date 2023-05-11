@@ -72,18 +72,28 @@ public class PersonDTO {
     }
 
     public void replaceField(String field, String newContent) {
-        for(String key : fields.keySet()) {
-            if(key == field) {
-                fields.replace(field, newContent);
+        if(!field.isEmpty() && !newContent.isEmpty()) {
+            for(String key : fields.keySet()) {
+                if(key == field) {
+                    fields.replace(field, newContent);
+                }
             }
+        }
+        else {
+            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
     }
 
     public boolean fieldExists(String field) {
-        for(String key : fields.keySet()) {
-            if(key == field) {
-                return true;
+        if(!field.isEmpty()) {
+            for(String key : fields.keySet()) {
+                if(key == field) {
+                    return true;
+                }
             }
+        }
+        else {
+            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
 
         return false;

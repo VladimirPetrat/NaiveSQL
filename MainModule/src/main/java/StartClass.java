@@ -16,7 +16,7 @@ public class StartClass {
         System.out.println(me.returnPersonDTO());
 
         me.removeField("year");
-        me.replaceField("year", "");
+        me.replaceField("year", " ");
         System.out.println(System.lineSeparator() + "ID = " + me.returnField("id") +
                             System.lineSeparator() + "Name = " + me.returnField("name")+
                             System.lineSeparator() + "Year = " + me.returnField("year"));
