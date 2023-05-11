@@ -22,7 +22,12 @@ public class PersonDTO {
     }
 
     public void addPersonDTO(HashMap<String, String> newFields) {
-        this.fields.putAll(newFields);
+        if(!newFields.isEmpty()) {
+            this.fields.putAll(newFields);
+        }
+        else {
+            throw new IllegalArgumentException("Invalid input! [Empty argument object]");
+        }
     }
 
     public void addField(String field, String fieldContent) {
