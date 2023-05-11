@@ -100,12 +100,17 @@ public class PersonDTO {
     }
 
     public boolean fieldIsEmpty(String field) {
-        for(String key : fields.keySet()) {
-            if(key == field) {
-                if(fields.get(key).isEmpty()) {
-                    return true;
+        if(!field.isEmpty()) {
+            for(String key : fields.keySet()) {
+                if(key == field) {
+                    if(fields.get(key).isEmpty()) {
+                        return true;
+                    }
                 }
             }
+        }
+        else {
+            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
 
         return false;
