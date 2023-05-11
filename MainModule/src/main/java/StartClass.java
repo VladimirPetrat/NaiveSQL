@@ -15,7 +15,7 @@ public class StartClass {
         me.replaceField("year", "1999");
         System.out.println(me.returnPersonDTO());
 
-        // me.removeField("year");
+        me.removeField("year");
         me.replaceField("year", "");
         System.out.println(System.lineSeparator() + "ID = " + me.returnField("id") +
                             System.lineSeparator() + "Name = " + me.returnField("name")+
@@ -36,8 +36,10 @@ public class StartClass {
         newPer.addPersonDTO(dto);
         System.out.println(newPer.returnPersonDTO());
 
+        newPer.removeField("doesn't exist");
+
         newPer.removePersonDTO();
-        newPer.removePersonDTO();
+        // newPer.removePersonDTO();
         // newPer.addField("", "");
         // System.out.println(newPer.returnPersonDTO());
     }

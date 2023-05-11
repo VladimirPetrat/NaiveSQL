@@ -31,7 +31,7 @@ public class PersonDTO {
             this.fields.putAll(newFields);
         }
         else {
-            throw new IllegalArgumentException("Invalid input! [Trying to get an empty argument object]");
+            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
     }
 
@@ -40,7 +40,7 @@ public class PersonDTO {
             this.fields.put(field, fieldContent);
         }
         else {
-            throw new IllegalArgumentException("Invalid input! [Trying to get empty arguments]");
+            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
     }
 
@@ -54,7 +54,12 @@ public class PersonDTO {
     }
 
     public void removeField(String field) {
-        fields.remove(field);
+        if(!field.isEmpty() && !fields.get(field).isEmpty()) {
+            fields.remove(field);
+        }
+        else {
+            throw new IllegalArgumentException("ERROR! [Trying to remove a field from an empty HashTable or the field doesn't exist]");
+        }
     }
 
     public String returnField(String field) {
