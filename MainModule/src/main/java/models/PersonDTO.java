@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 public class PersonDTO {
     
     private HashMap<String, String> fields = new HashMap<>();
+    private String errorArg = "ERROR! [Trying to get empty arguments]";
+    private String errorTbl = "ERROR! [Trying to reach an empty table]";
 
     public PersonDTO(){}
 
@@ -17,100 +19,99 @@ public class PersonDTO {
         this.fields.put("year", year);
     }
 
-    public HashMap<String, String> returnPersonDTO() {
-        if(!fields.isEmpty()) {
-            return fields;
+    private String validateArg(String field, String errorMessage) {
+        if(!field.isEmpty())
+        {
+            return field;
+        }
+        else{
+            throw new IllegalArgumentException(errorMessage);
+        }
+    }
+
+    private HashMap<String, String> validateTbl(HashMap<String, String> table, String errorMessage) {
+        if(!table.isEmpty()) {
+            return table;
         }
         else {
-            throw new IllegalAccessError("ERROR! [Trying to output an empty class object]");
+            throw new IllegalAccessError(errorMessage);
         }
+    }
+
+    public HashMap<String, String> returnPersonDTO() {
+        validateTbl(fields, errorTbl);
+
+        return fields;
     }
 
     public void addPersonDTO(HashMap<String, String> newFields) {
-        if(!newFields.isEmpty()) {
-            this.fields.putAll(newFields);
-        }
-        else {
-            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
-        }
+        validateTbl(newFields, errorTbl);
+
+        fields.putAll(newFields);
     }
 
     public void addField(String field, String fieldContent) {
-        if(!field.isEmpty() && !fieldContent.isEmpty()) {
-            this.fields.put(field, fieldContent);
-        }
-        else {
-            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
-        }
+        validateArg(field, errorArg);
+        validateArg(fieldContent, errorArg);
+
+        this.fields.put(field, fieldContent);
     }
 
     public void removePersonDTO() {
-        if(!fields.isEmpty()) {
-            fields.clear();
-        }
-        else {
-            throw new IllegalAccessError("ERROR! [Trying to clean an empty HashTable]");
-        }
+        validateTbl(fields, errorTbl);
+
+        fields.clear();
     }
 
     public void removeField(String field) {
-        if(!field.isEmpty() && !fields.get(field).isEmpty()) {
+        validateArg(field, errorArg);
+
+        if(!fields.get(field).isEmpty()) {
             fields.remove(field);
         }
         else {
-            throw new IllegalArgumentException("ERROR! [Trying to remove a field from an empty HashTable or the field doesn't exist]");
+            throw new IllegalAccessError("ERROR! [Trying to remove a field that doesn't exist]");
         }
     }
 
     public String returnField(String field) {
-        if(!field.isEmpty()) {
-            return fields.get(field);
-        }
-        else {
-            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
-        }
+        validateArg(field, errorArg);
+
+        return fields.get(field);
     }
 
     public void replaceField(String field, String newContent) {
-        if(!field.isEmpty() && !newContent.isEmpty()) {
-            for(String key : fields.keySet()) {
-                if(key == field) {
-                    fields.replace(field, newContent);
-                }
+        validateArg(field, errorArg);
+        validateArg(newContent, errorArg);
+
+        for(String key : fields.keySet()) {
+            if(key == field) {
+                fields.replace(field, newContent);
             }
-        }
-        else {
-            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
     }
 
     public boolean fieldExists(String field) {
-        if(!field.isEmpty()) {
-            for(String key : fields.keySet()) {
-                if(key == field) {
-                    return true;
-                }
+        validateArg(field, errorArg);
+
+        for(String key : fields.keySet()) {
+            if(key == field) {
+                return true;
             }
-        }
-        else {
-            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
 
         return false;
     }
 
     public boolean fieldIsEmpty(String field) {
-        if(!field.isEmpty()) {
-            for(String key : fields.keySet()) {
-                if(key == field) {
-                    if(fields.get(key).isEmpty()) {
-                        return true;
-                    }
+        validateArg(field, errorArg);
+
+        for(String key : fields.keySet()) {
+            if(key == field) {
+                if(fields.get(key).isEmpty()) {
+                    return true;
                 }
             }
-        }
-        else {
-            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
         }
 
         return false;
