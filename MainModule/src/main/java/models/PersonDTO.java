@@ -7,10 +7,11 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class PersonDTO {
     
-    private HashMap<String, String> fields;
+    private HashMap<String, String> fields = new HashMap<>();
+
+    public PersonDTO(){}
 
     public PersonDTO(String id, String name, String year) {
-        this.fields = new HashMap<>();
         this.fields.put("id", id);
         this.fields.put("name", name);
         this.fields.put("year", year);
@@ -18,6 +19,10 @@ public class PersonDTO {
 
     public HashMap<String, String> returnPersonDTO() {
         return fields;
+    }
+
+    public void addPersonDTO(HashMap<String, String> newFields) {
+        fields.putAll(newFields);
     }
 
     public void addField(String field, String fieldContent) {

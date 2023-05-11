@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 import models.PersonDTO;
 
 public class StartClass {
@@ -24,5 +26,15 @@ public class StartClass {
 
         System.out.println(me.fieldExists("year"));
         System.out.println(me.fieldIsEmpty("year"));
+
+        PersonDTO newPer = new PersonDTO();
+
+        HashMap<String, String> dto = new HashMap<>();
+        dto.put("name", "usual");
+        dto.put("second_name", "unusual");
+
+        newPer.addPersonDTO(dto);
+        System.out.println(newPer.returnPersonDTO());
+
     }
 }
