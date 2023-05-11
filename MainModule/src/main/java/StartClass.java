@@ -37,7 +37,8 @@ public class StartClass {
         System.out.println(newPer.returnPersonDTO());
 
         newPer.removePersonDTO();
-        newPer.addField("", "");
-        System.out.println(newPer.returnPersonDTO());
+        newPer.removePersonDTO();
+        // newPer.addField("", "");
+        // System.out.println(newPer.returnPersonDTO());
     }
 }

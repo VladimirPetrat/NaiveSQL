@@ -22,7 +22,7 @@ public class PersonDTO {
             return fields;
         }
         else {
-            throw new IllegalArgumentException("Invalid output! [Empty class object]");
+            throw new IllegalAccessError("ERROR! [Trying to output an empty class object]");
         }
     }
 
@@ -31,7 +31,7 @@ public class PersonDTO {
             this.fields.putAll(newFields);
         }
         else {
-            throw new IllegalArgumentException("Invalid input! [Empty argument object]");
+            throw new IllegalArgumentException("Invalid input! [Trying to get an empty argument object]");
         }
     }
 
@@ -40,12 +40,17 @@ public class PersonDTO {
             this.fields.put(field, fieldContent);
         }
         else {
-            throw new IllegalArgumentException("Invalid input! [Empty arguments]");
+            throw new IllegalArgumentException("Invalid input! [Trying to get empty arguments]");
         }
     }
 
     public void removePersonDTO() {
-        fields.clear();
+        if(!fields.isEmpty()) {
+            fields.clear();
+        }
+        else {
+            throw new IllegalAccessError("ERROR! [Trying to clean an empty HashTable]");
+        }
     }
 
     public void removeField(String field) {
