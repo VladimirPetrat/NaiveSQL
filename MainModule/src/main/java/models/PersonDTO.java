@@ -63,7 +63,12 @@ public class PersonDTO {
     }
 
     public String returnField(String field) {
-        return fields.get(field);
+        if(!field.isEmpty()) {
+            return fields.get(field);
+        }
+        else {
+            throw new IllegalArgumentException("ERROR! [Trying to get empty arguments]");
+        }
     }
 
     public void replaceField(String field, String newContent) {

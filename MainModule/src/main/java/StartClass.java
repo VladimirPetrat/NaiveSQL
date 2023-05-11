@@ -36,11 +36,8 @@ public class StartClass {
         newPer.addPersonDTO(dto);
         System.out.println(newPer.returnPersonDTO());
 
-        newPer.removeField("doesn't exist");
+        // newPer.returnField("");
 
         newPer.removePersonDTO();
-        // newPer.removePersonDTO();
-        // newPer.addField("", "");
-        // System.out.println(newPer.returnPersonDTO());
     }
 }
