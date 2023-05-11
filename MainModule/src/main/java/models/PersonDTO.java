@@ -16,23 +16,23 @@ public class PersonDTO {
         this.fields.put("year", year);
     }
 
-    public HashMap<String, String> returnPersonDTO(){
+    public HashMap<String, String> returnPersonDTO() {
         return fields;
     }
 
-    public void addField(String field, String fieldContent){
+    public void addField(String field, String fieldContent) {
         this.fields.put(field, fieldContent);
     }
 
-    public void removeField(String field){
+    public void removeField(String field) {
         fields.remove(field);
     }
 
-    public String returnField(String field){
+    public String returnField(String field) {
         return fields.get(field);
     }
 
-    private void operationReplace(String field, String newField){
+    private void operationReplace(String field, String newField) {
         for(String key : fields.keySet()){
             if(key == field){
                 fields.replace(field, newField);
@@ -40,7 +40,7 @@ public class PersonDTO {
         }
     }
 
-    public void replaceField(String field, String newContent){
+    public void replaceField(String field, String newContent) {
         operationReplace(field, newContent);
     }
 }
