@@ -1,6 +1,7 @@
 package models;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import lombok.AllArgsConstructor;
 
@@ -20,22 +21,11 @@ public class PersonDTO {
     }
 
     private String validateArg(String field, String errorMessage) {
-        if(!field.isEmpty())
-        {
-            return field;
-        }
-        else{
-            throw new IllegalArgumentException(errorMessage);
-        }
+        return Optional.ofNullable(field).orElseThrow(() -> new IllegalArgumentException(errorMessage));
     }
 
     private HashMap<String, String> validateTbl(HashMap<String, String> table, String errorMessage) {
-        if(!table.isEmpty()) {
-            return table;
-        }
-        else {
-            throw new IllegalAccessError(errorMessage);
-        }
+        return Optional.ofNullable(table).orElseThrow(() -> new IllegalAccessError(errorMessage));
     }
 
     public HashMap<String, String> returnPersonDTO() {
