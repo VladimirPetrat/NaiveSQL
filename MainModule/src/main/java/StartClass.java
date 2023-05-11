@@ -13,12 +13,16 @@ public class StartClass {
         me.replaceField("year", "1999");
         System.out.println(me.returnPersonDTO());
 
-        me.removeField("year");
+        // me.removeField("year");
+        me.replaceField("year", "");
         System.out.println(System.lineSeparator() + "ID = " + me.returnField("id") +
                             System.lineSeparator() + "Name = " + me.returnField("name")+
                             System.lineSeparator() + "Year = " + me.returnField("year"));
 
         me.addField("second_name", "Kushyk");
         System.out.println(me.returnPersonDTO());
+
+        System.out.println(me.fieldExists("year"));
+        System.out.println(me.fieldIsEmpty("year"));
     }
 }

@@ -39,4 +39,26 @@ public class PersonDTO {
             }
         }
     }
+
+    public boolean fieldExists(String field) {
+        for(String key : fields.keySet()) {
+            if(key == field) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean fieldIsEmpty(String field) {
+        for(String key : fields.keySet()) {
+            if(key == field) {
+                if(fields.get(key).isEmpty()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
