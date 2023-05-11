@@ -21,4 +21,12 @@ public class PersonDTO {
     public HashMap<String, String> returnPersonDTO(){
         return fields;
     }
+
+    public void replaceID(String newId){
+        for(String key : fields.keySet()){
+            if(key == "id"){
+                fields.replace("id", newId);
+            }
+        }
+    }
 }
