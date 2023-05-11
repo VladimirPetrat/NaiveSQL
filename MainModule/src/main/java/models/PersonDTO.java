@@ -32,15 +32,11 @@ public class PersonDTO {
         return fields.get(field);
     }
 
-    private void operationReplace(String field, String newField) {
+    public void replaceField(String field, String newContent) {
         for(String key : fields.keySet()) {
             if(key == field) {
-                fields.replace(field, newField);
+                fields.replace(field, newContent);
             }
         }
-    }
-
-    public void replaceField(String field, String newContent) {
-        operationReplace(field, newContent);
     }
 }
