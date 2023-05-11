@@ -3,9 +3,7 @@ package models;
 import java.util.HashMap;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
 @AllArgsConstructor
 public class PersonDTO {
     
