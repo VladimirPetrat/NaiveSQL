@@ -22,6 +22,14 @@ public class PersonDTO {
         return fields;
     }
 
+    public void addField(String field, String fieldContent){
+        this.fields.put(field, fieldContent);
+    }
+
+    public void removeField(String field){
+        fields.remove(field);
+    }
+
     public String returnField(String field){
         return fields.get(field);
     }
