@@ -12,5 +12,9 @@ public class StartClass {
         me.replaceName("Andrew");
         me.replaceYear("1999");
         System.out.println(me.returnPersonDTO());
+
+        System.out.println("\nID = " + me.returnId() +
+                            "\nName = " + me.returnName()+
+                            "\nYear = " + me.returnYear());
     }
 }

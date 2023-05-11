@@ -22,6 +22,18 @@ public class PersonDTO {
         return fields;
     }
 
+    public String returnId(){
+        return fields.get("id");
+    }
+
+    public String returnName(){
+        return fields.get("name");
+    }
+
+    public String returnYear(){
+        return fields.get("year");
+    }
+
     private void operationReplace(String field, String newField){
         for(String key : fields.keySet()){
             if(key == field){
