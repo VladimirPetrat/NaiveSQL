@@ -36,5 +36,7 @@ public class StartClass {
         newPer.addPersonDTO(dto);
         System.out.println(newPer.returnPersonDTO());
 
+        newPer.removePersonDTO();
+        System.out.println(newPer.returnPersonDTO());
     }
 }

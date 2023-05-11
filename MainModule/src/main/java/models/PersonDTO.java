@@ -22,11 +22,15 @@ public class PersonDTO {
     }
 
     public void addPersonDTO(HashMap<String, String> newFields) {
-        fields.putAll(newFields);
+        this.fields.putAll(newFields);
     }
 
     public void addField(String field, String fieldContent) {
         this.fields.put(field, fieldContent);
+    }
+
+    public void removePersonDTO() {
+        fields.clear();
     }
 
     public void removeField(String field) {
