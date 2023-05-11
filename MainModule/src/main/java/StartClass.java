@@ -9,6 +9,8 @@ public class StartClass {
         System.out.println(me.returnPersonDTO());
 
         me.replaceID("2");
+        me.replaceName("Andrew");
+        me.replaceYear("1999");
         System.out.println(me.returnPersonDTO());
     }
 }

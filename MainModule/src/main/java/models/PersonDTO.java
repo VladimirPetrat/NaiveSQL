@@ -22,11 +22,23 @@ public class PersonDTO {
         return fields;
     }
 
-    public void replaceID(String newId){
+    private void operationReplace(String field, String newField){
         for(String key : fields.keySet()){
-            if(key == "id"){
-                fields.replace("id", newId);
+            if(key == field){
+                fields.replace(field, newField);
             }
         }
+    }
+
+    public void replaceID(String newId){
+        operationReplace("id", newId);
+    }
+
+    public void replaceName(String newName){
+        operationReplace("name", newName);
+    }
+
+    public void replaceYear(String newYear){
+        operationReplace("year", newYear);
     }
 }
