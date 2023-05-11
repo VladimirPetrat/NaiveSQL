@@ -33,8 +33,8 @@ public class PersonDTO {
     }
 
     private void operationReplace(String field, String newField) {
-        for(String key : fields.keySet()){
-            if(key == field){
+        for(String key : fields.keySet()) {
+            if(key == field) {
                 fields.replace(field, newField);
             }
         }
