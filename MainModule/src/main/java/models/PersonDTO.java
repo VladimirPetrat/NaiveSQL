@@ -18,7 +18,12 @@ public class PersonDTO {
     }
 
     public HashMap<String, String> returnPersonDTO() {
-        return fields;
+        if(!fields.isEmpty()) {
+            return fields;
+        }
+        else {
+            throw new IllegalArgumentException("Invalid output! [Empty class object]");
+        }
     }
 
     public void addPersonDTO(HashMap<String, String> newFields) {
