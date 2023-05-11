@@ -36,7 +36,12 @@ public class PersonDTO {
     }
 
     public void addField(String field, String fieldContent) {
-        this.fields.put(field, fieldContent);
+        if(!field.isEmpty() && !fieldContent.isEmpty()) {
+            this.fields.put(field, fieldContent);
+        }
+        else {
+            throw new IllegalArgumentException("Invalid input! [Empty arguments]");
+        }
     }
 
     public void removePersonDTO() {
