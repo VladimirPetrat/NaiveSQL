@@ -1,5 +1,5 @@
 # Compiled class file
-MainModule/target/
+MainModule/target/*
 
 # IDE files
 .idea/
