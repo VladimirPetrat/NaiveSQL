@@ -19,8 +19,7 @@ public class TableHolder {
 
     public void addRow(HashMap<String, String> rowDataPackage) {
         if (!verifyColumnNamesCorrect(rowDataPackage)) {
-            //TODO Create respectful exception schema
-            throw new RuntimeException("Incorrect rows in insert data package");
+            throw new IllegalArgumentException("Incorrect rows in insert data package");
         }
         rows.put(generateUniqueId(), rowDataPackage);
     }
