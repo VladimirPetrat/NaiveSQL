@@ -1,4 +1,4 @@
-import model.data.TableHolder;
+import model.data.Table;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,7 +10,7 @@ public class StartClass {
         columns.add("first name");
         columns.add("second name");
         columns.add("age");
-        TableHolder myTable = new TableHolder(columns);
+        Table myTable = new Table(columns);
 
         HashMap<String, String> data = new HashMap<>();
         data.put("first name", "Andrew");

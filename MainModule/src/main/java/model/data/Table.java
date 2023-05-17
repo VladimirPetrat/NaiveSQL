@@ -4,23 +4,21 @@ import lombok.Data;
 
 import java.util.*;
 
-import static org.apache.commons.lang3.StringUtils.EMPTY;
-
 @Data
-public class TableHolder {
+public class Table<T> {
 
     private String errorId = "[ERROR] [Incorrect ID]";
     private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
     private String errorRws = "[ERROR] [Trying to reach an empty row]";
     private HashSet<String> columnNames;
-    private HashMap<String, Map<String, String>> rows;
+    private HashMap<String, Map<String, T>> rows;
 
-    public TableHolder(HashSet<String> columnNames) {
+    public Table(HashSet<String> columnNames) {
         this.columnNames = columnNames;
         rows = new HashMap<>();
     }
 
-    public String addRow(HashMap<String, String> rowDataPackage) {
+    public String addRow(HashMap<String, T> rowDataPackage) {
         verifyColumnNamesCorrect(rowDataPackage);
 
         String id = generateUniqueId();
@@ -35,27 +33,28 @@ public class TableHolder {
         rows.remove(id);
     }
 
-    public void updateRowFieldValues(String id, HashMap<String, String> rowDataPackage) {
+    public void updateRowFieldValues(String id, HashMap<String, T> rowDataPackage) {
         verifyId(id);
         verifyColumnNamesCorrect(rowDataPackage);
         rows.get(id).putAll(rowDataPackage);
     }
 
-    public void replaceRowFieldValues(String id, HashMap<String, String> rowDataPackage) {
+    public void replaceRowFieldValues(String id, HashMap<String, T> rowDataPackage) {
         verifyId(id);
         verifyColumnNamesCorrect(rowDataPackage);
         var existingRow = rows.get(id);
         existingRow
                 .keySet()
-                .forEach(field -> existingRow.put(field, rowDataPackage.getOrDefault(field, EMPTY)));
+                .forEach(field -> existingRow.put(field, rowDataPackage.getOrDefault(field, null)));
     }
 
     public boolean rowIsEmpty() {
         return rows.isEmpty();
     }
 
-    private HashMap<String, Map<String, String>> verifyRows(HashMap<String, Map<String, String>> rows, String errorMessage) {
-        return Optional.ofNullable(rows)
+    private HashMap<String, Map<String, T>> verifyRows(HashMap<String, Map<String, T>> rows, String errorMessage) {
+        return Optional
+                .ofNullable(rows)
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage));
     }
 
@@ -65,7 +64,7 @@ public class TableHolder {
         }
     }
 
-    private void verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
+    private void verifyColumnNamesCorrect(HashMap<String, T> rowDataPackage) {
         if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
             throw new IllegalArgumentException(errorArg);
         }
