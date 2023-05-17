@@ -4,6 +4,8 @@ import lombok.Data;
 
 import java.util.*;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
+
 @Data
 public class TableHolder {
 
@@ -19,9 +21,7 @@ public class TableHolder {
     }
 
     public String addRow(HashMap<String, String> rowDataPackage) {
-        if (!verifyColumnNamesCorrect(rowDataPackage)) {
-            throw new IllegalArgumentException(errorArg);
-        }
+        verifyColumnNamesCorrect(rowDataPackage);
 
         String id = generateUniqueId();
         rows.put(id, rowDataPackage);
@@ -29,16 +29,25 @@ public class TableHolder {
         return id;
     }
 
-    public void removeRow(String id){
+    public void removeRow(String id) {
+        verifyId(id);
         verifyRows(rows, errorRws);
-        rows.remove(verifyId(id));
+        rows.remove(id);
     }
 
-    public void replaceRow(String id, HashMap<String, String> rowDataPackage) {
-        if (!verifyColumnNamesCorrect(rowDataPackage)) {
-            throw new IllegalArgumentException(errorArg);
-        }
-        rows.replace(verifyId(id), rowDataPackage);
+    public void updateRowFieldValues(String id, HashMap<String, String> rowDataPackage) {
+        verifyId(id);
+        verifyColumnNamesCorrect(rowDataPackage);
+        rows.get(id).putAll(rowDataPackage);
+    }
+
+    public void replaceRowFieldValues(String id, HashMap<String, String> rowDataPackage) {
+        verifyId(id);
+        verifyColumnNamesCorrect(rowDataPackage);
+        var existingRow = rows.get(id);
+        existingRow
+                .keySet()
+                .forEach(field -> existingRow.put(field, rowDataPackage.getOrDefault(field, EMPTY)));
     }
 
     public boolean rowIsEmpty() {
@@ -50,19 +59,16 @@ public class TableHolder {
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage));
     }
 
-    private String verifyId(String id) {
+    private void verifyId(String id) {
         if (!rows.containsKey(id)) {
             throw new IllegalArgumentException(errorId);
         }
-
-        return id;
     }
 
-    private boolean verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
-        if (rowDataPackage.isEmpty()) {
+    private void verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
+        if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
             throw new IllegalArgumentException(errorArg);
         }
-        return columnNames.containsAll(rowDataPackage.keySet());
     }
 
     private String generateUniqueId() {

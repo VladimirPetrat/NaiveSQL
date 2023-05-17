@@ -29,7 +29,7 @@ public class StartClass {
         HashMap<String, String> newData = new HashMap<>();
         newData.put("first name", "Oleg");
         newData.put("second name", "New");
-        myTable.replaceRow(id, newData);
+        myTable.replaceRowFieldValues(id, newData);
         System.out.println(myTable);
 
     }
