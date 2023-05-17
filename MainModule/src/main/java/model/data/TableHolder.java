@@ -2,14 +2,14 @@ package model.data;
 
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Data
 public class TableHolder {
 
+    private String errorId = "[ERROR] [Incorrect ID]";
+    private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
+    private String errorRws = "[ERROR] [Trying to reach an empty row]";
     private HashSet<String> columnNames;
     private HashMap<String, Map<String, String>> rows;
 
@@ -20,7 +20,7 @@ public class TableHolder {
 
     public String addRow(HashMap<String, String> rowDataPackage) {
         if (!verifyColumnNamesCorrect(rowDataPackage)) {
-            throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
+            throw new IllegalArgumentException(errorArg);
         }
 
         String id = generateUniqueId();
@@ -30,26 +30,34 @@ public class TableHolder {
     }
 
     public void removeRow(String id) throws IllegalAccessException {
-        if (rowIsEmpty()) {
-            throw new IllegalAccessException("[ERROR] Trying to remove an empty row");
-        }
+        verifyRows(rows, errorRws);
         rows.remove(verifyId(id));
     }
 
     public void replaceRow(String id, HashMap<String, String> rowDataPackage) {
         if (!verifyColumnNamesCorrect(rowDataPackage)) {
-            throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
+            throw new IllegalArgumentException(errorArg);
         }
         rows.replace(verifyId(id), rowDataPackage);
     }
 
-    public boolean rowIsEmpty(){
+    public boolean rowIsEmpty() {
         return rows.isEmpty();
+    }
+
+    private String verifyArg(String field, String errorMessage) {
+        return Optional.ofNullable(field)
+                .orElseThrow(() -> new IllegalArgumentException(errorMessage));
+    }
+
+    private HashMap<String, Map<String, String>> verifyRows(HashMap<String, Map<String, String>> rows, String errorMessage) {
+        return Optional.ofNullable(rows)
+                .orElseThrow(() -> new IllegalArgumentException(errorMessage));
     }
 
     private String verifyId(String id) {
         if (!rows.containsKey(id)) {
-            throw new IllegalArgumentException("[ERROR] Incorrect ID");
+            throw new IllegalArgumentException(errorId);
         }
 
         return id;
@@ -57,7 +65,7 @@ public class TableHolder {
 
     private boolean verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
         if (rowDataPackage.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] Trying to get an empty argument");
+            throw new IllegalArgumentException(errorArg);
         }
         return columnNames.containsAll(rowDataPackage.keySet());
     }

@@ -21,10 +21,10 @@ public class StartClass {
         System.out.println("id = " + id);
         System.out.println(myTable);
 
-//        myTable.removeRow(id);
-//        myTable.removeRow(id);
-//        System.out.println(myTable);
-//        System.out.println(myTable.rowIsEmpty());
+        myTable.removeRow(id);
+        myTable.removeRow(id);
+        System.out.println(myTable);
+        System.out.println(myTable.rowIsEmpty());
 
         HashMap<String, String> newData = new HashMap<>();
         newData.put("first name", "Oleg");
