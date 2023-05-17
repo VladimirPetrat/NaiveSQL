@@ -15,6 +15,7 @@ public class TableHolder {
 
     public TableHolder(HashSet<String> columnNames) {
         this.columnNames = columnNames;
+        rows = new HashMap<>();
     }
 
     public void addRow(HashMap<String, String> rowDataPackage) {
@@ -32,7 +33,7 @@ public class TableHolder {
         String uniqueId;
         do {
             uniqueId = UUID.randomUUID().toString();
-        } while (rows.containsKey(uniqueId));
+        } while (this.rows.containsKey(uniqueId));
         return uniqueId;
     }
 }
