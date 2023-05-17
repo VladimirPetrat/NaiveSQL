@@ -27,19 +27,22 @@ public class TableHolder {
         return returnUniqueId();
     }
 
-    public void removeRow(String id) {
+    public void removeRow(String id) throws IllegalAccessException {
+        if (rows.isEmpty()) {
+            throw new IllegalAccessException("[ERROR] Trying to remove an empty row");
+        }
         rows.remove(verifyId(id));
     }
 
     public void replaceRow(String id, HashMap<String, String> rowDataPackage) {
-        if(!verifyColumnNamesCorrect(rowDataPackage)) {
+        if (!verifyColumnNamesCorrect(rowDataPackage)) {
             throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
         }
         rows.replace(verifyId(id), rowDataPackage);
     }
 
     private String verifyId(String id) {
-        if(!rows.containsKey(id)){
+        if (!rows.containsKey(id)) {
             throw new IllegalArgumentException("[ERROR] Incorrect ID");
         }
 
@@ -47,6 +50,9 @@ public class TableHolder {
     }
 
     private boolean verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
+        if (rowDataPackage.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] Trying to get an empty argument");
+        }
         return columnNames.containsAll(rowDataPackage.keySet());
     }
 
@@ -59,6 +65,9 @@ public class TableHolder {
     }
 
     private String returnUniqueId() {
-        return rows.keySet().stream().findFirst().orElse(null);
+        return rows.keySet()
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR Such an id doesn't exist]"));
     }
 }

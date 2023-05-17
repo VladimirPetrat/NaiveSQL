@@ -5,7 +5,7 @@ import java.util.HashSet;
 
 public class StartClass {
 
-    public static void main(String... args) {
+    public static void main(String... args) throws IllegalAccessException {
         HashSet<String> columns = new HashSet<>();
         columns.add("first name");
         columns.add("second name");
@@ -22,6 +22,7 @@ public class StartClass {
         System.out.println(myTable);
 
 //        myTable.removeRow(id);
+//        myTable.removeRow(id);
 //        System.out.println(myTable);
 
         HashMap<String, String> newData = new HashMap<>();
@@ -29,5 +30,6 @@ public class StartClass {
         newData.put("second name", "Melnyk");
         myTable.replaceRow(id, newData);
         System.out.println(myTable);
+
     }
 }
