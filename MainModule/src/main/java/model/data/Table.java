@@ -30,18 +30,19 @@ public class Table<T> {
     public void removeRow(String id) {
         verifyId(id);
         verifyRows(rows, errorRws);
+
         rows.remove(id);
     }
 
     public void updateRowFieldValues(String id, HashMap<String, T> rowDataPackage) {
-        verifyId(id);
-        verifyColumnNamesCorrect(rowDataPackage);
+        verifyIdAndColumns(id, rowDataPackage);
+
         rows.get(id).putAll(rowDataPackage);
     }
 
     public void replaceRowFieldValues(String id, HashMap<String, T> rowDataPackage) {
-        verifyId(id);
-        verifyColumnNamesCorrect(rowDataPackage);
+        verifyIdAndColumns(id, rowDataPackage);
+
         var existingRow = rows.get(id);
         existingRow
                 .keySet()
@@ -68,6 +69,11 @@ public class Table<T> {
         if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
             throw new IllegalArgumentException(errorArg);
         }
+    }
+
+    private void verifyIdAndColumns(String id, HashMap<String, T> rowDataPackage){
+        verifyId(id);
+        verifyColumnNamesCorrect(rowDataPackage);
     }
 
     private String generateUniqueId() {

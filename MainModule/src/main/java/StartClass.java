@@ -21,15 +21,16 @@ public class StartClass {
         System.out.println("id = " + id);
         System.out.println(myTable);
 
-        myTable.removeRow(id);
-        myTable.removeRow(id);
-        System.out.println(myTable);
-        System.out.println(myTable.rowIsEmpty());
+//        myTable.removeRow(id);
+//        myTable.removeRow(id);
+//        System.out.println(myTable);
+//        System.out.println(myTable.rowIsEmpty());
 
         HashMap<String, String> newData = new HashMap<>();
         newData.put("first name", "Oleg");
         newData.put("second name", "New");
-        myTable.replaceRowFieldValues(id, newData);
+//        myTable.updateRowFieldValues(id, newData);
+//        myTable.replaceRowFieldValues(id, newData);
         System.out.println(myTable);
 
     }
