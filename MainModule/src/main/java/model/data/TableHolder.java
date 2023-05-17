@@ -28,7 +28,7 @@ public class TableHolder {
     }
 
     public void removeRow(String id) throws IllegalAccessException {
-        if (rows.isEmpty()) {
+        if (rowIsEmpty()) {
             throw new IllegalAccessException("[ERROR] Trying to remove an empty row");
         }
         rows.remove(verifyId(id));
@@ -39,6 +39,10 @@ public class TableHolder {
             throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
         }
         rows.replace(verifyId(id), rowDataPackage);
+    }
+
+    public boolean rowIsEmpty(){
+        return rows.isEmpty();
     }
 
     private String verifyId(String id) {
