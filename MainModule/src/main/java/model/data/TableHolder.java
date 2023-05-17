@@ -22,9 +22,11 @@ public class TableHolder {
         if (!verifyColumnNamesCorrect(rowDataPackage)) {
             throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
         }
-        rows.put(generateUniqueId(), rowDataPackage);
 
-        return returnUniqueId();
+        String id = generateUniqueId();
+        rows.put(id, rowDataPackage);
+
+        return id;
     }
 
     public void removeRow(String id) throws IllegalAccessException {
@@ -68,10 +70,4 @@ public class TableHolder {
         return uniqueId;
     }
 
-    private String returnUniqueId() {
-        return rows.keySet()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR Such an id doesn't exist]"));
-    }
 }
