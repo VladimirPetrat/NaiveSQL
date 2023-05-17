@@ -18,11 +18,13 @@ public class TableHolder {
         rows = new HashMap<>();
     }
 
-    public void addRow(HashMap<String, String> rowDataPackage) {
+    public String addRow(HashMap<String, String> rowDataPackage) {
         if (!verifyColumnNamesCorrect(rowDataPackage)) {
             throw new IllegalArgumentException("Incorrect rows in insert data package");
         }
         rows.put(generateUniqueId(), rowDataPackage);
+
+        return returnUniqueId();
     }
 
     private boolean verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
@@ -35,5 +37,9 @@ public class TableHolder {
             uniqueId = UUID.randomUUID().toString();
         } while (this.rows.containsKey(uniqueId));
         return uniqueId;
+    }
+
+    private String returnUniqueId() {
+        return rows.keySet().stream().findFirst().orElse(null);
     }
 }
