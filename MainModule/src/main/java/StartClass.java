@@ -20,7 +20,14 @@ public class StartClass {
 
         System.out.println("id = " + id);
         System.out.println(myTable);
-        myTable.removeRow(id);
+
+//        myTable.removeRow(id);
+//        System.out.println(myTable);
+
+        HashMap<String, String> newData = new HashMap<>();
+        newData.put("first name", "Oleg");
+        newData.put("second name", "Melnyk");
+        myTable.replaceRow(id, newData);
         System.out.println(myTable);
     }
 }

@@ -28,15 +28,22 @@ public class TableHolder {
     }
 
     public void removeRow(String id) {
-        if(!verifyId(id)) {
+        rows.remove(verifyId(id));
+    }
+
+    public void replaceRow(String id, HashMap<String, String> rowDataPackage) {
+        if(!verifyColumnNamesCorrect(rowDataPackage)) {
+            throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
+        }
+        rows.replace(verifyId(id), rowDataPackage);
+    }
+
+    private String verifyId(String id) {
+        if(!rows.containsKey(id)){
             throw new IllegalArgumentException("[ERROR] Incorrect ID");
         }
 
-        rows.remove(id);
-    }
-
-    private boolean verifyId(String id) {
-        return rows.containsKey(id);
+        return id;
     }
 
     private boolean verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {
