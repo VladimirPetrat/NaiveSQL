@@ -12,10 +12,10 @@ public class StartClass {
         columns.add("age");
         Table myTable = new Table(columns);
 
-        HashMap<String, String> data = new HashMap<>();
+        HashMap<String, Object> data = new HashMap<>();
         data.put("first name", "Andrew");
         data.put("second name", "Kushyk");
-        data.put("age", "21");
+        data.put("age", 21);
         String id = myTable.addRow(data);
 
         System.out.println("id = " + id);
@@ -26,11 +26,13 @@ public class StartClass {
 //        System.out.println(myTable);
 //        System.out.println(myTable.rowIsEmpty());
 
-        HashMap<String, String> newData = new HashMap<>();
+        HashMap<String, Object> newData = new HashMap<>();
         newData.put("first name", "Oleg");
-        newData.put("second name", "New");
+        newData.put("age", 21);
+
 //        myTable.updateRowFieldValues(id, newData);
 //        myTable.replaceRowFieldValues(id, newData);
+//        System.out.println(myTable.rowIsEmpty());
         System.out.println(myTable);
 
     }

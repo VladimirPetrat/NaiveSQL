@@ -11,7 +11,7 @@ public class Table<T> {
     private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
     private String errorRws = "[ERROR] [Trying to reach an empty row]";
     private HashSet<String> columnNames;
-    private HashMap<String, Map<String, T>> rows;
+    private HashMap<String, HashMap<String, T>> rows;
 
     public Table(HashSet<String> columnNames) {
         this.columnNames = columnNames;
@@ -53,7 +53,7 @@ public class Table<T> {
         return rows.isEmpty();
     }
 
-    private HashMap<String, Map<String, T>> verifyRows(HashMap<String, Map<String, T>> rows, String errorMessage) {
+    private HashMap<String, HashMap<String, T>> verifyRows(HashMap<String, HashMap<String, T>> rows, String errorMessage) {
         return Optional
                 .ofNullable(rows)
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage));
