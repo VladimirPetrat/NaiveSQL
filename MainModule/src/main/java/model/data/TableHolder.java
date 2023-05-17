@@ -29,7 +29,7 @@ public class TableHolder {
         return id;
     }
 
-    public void removeRow(String id) throws IllegalAccessException {
+    public void removeRow(String id){
         verifyRows(rows, errorRws);
         rows.remove(verifyId(id));
     }
@@ -43,11 +43,6 @@ public class TableHolder {
 
     public boolean rowIsEmpty() {
         return rows.isEmpty();
-    }
-
-    private String verifyArg(String field, String errorMessage) {
-        return Optional.ofNullable(field)
-                .orElseThrow(() -> new IllegalArgumentException(errorMessage));
     }
 
     private HashMap<String, Map<String, String>> verifyRows(HashMap<String, Map<String, String>> rows, String errorMessage) {
