@@ -20,11 +20,23 @@ public class TableHolder {
 
     public String addRow(HashMap<String, String> rowDataPackage) {
         if (!verifyColumnNamesCorrect(rowDataPackage)) {
-            throw new IllegalArgumentException("Incorrect rows in insert data package");
+            throw new IllegalArgumentException("[ERROR] Incorrect rows in insert data package");
         }
         rows.put(generateUniqueId(), rowDataPackage);
 
         return returnUniqueId();
+    }
+
+    public void removeRow(String id) {
+        if(!verifyId(id)) {
+            throw new IllegalArgumentException("[ERROR] Incorrect ID");
+        }
+
+        rows.remove(id);
+    }
+
+    private boolean verifyId(String id) {
+        return rows.containsKey(id);
     }
 
     private boolean verifyColumnNamesCorrect(HashMap<String, String> rowDataPackage) {

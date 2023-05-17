@@ -20,5 +20,7 @@ public class StartClass {
 
         System.out.println("id = " + id);
         System.out.println(myTable);
+        myTable.removeRow(id);
+        System.out.println(myTable);
     }
 }
