@@ -38,7 +38,8 @@ public class Table {
     }
 
     public String addRow(List<DataObject> dataPackage) {
-//        verifyColumnNamesCorrect(rowDataPackage);
+        //TODO uncomment when it's done
+//        verifyColumnNamesCorrect(dataPackage);
 
         String id = generateUniqueId();
         rows.put(id, dataPackage);
@@ -46,6 +47,7 @@ public class Table {
         return id;
     }
 
+    //TODO rewrite all the methods
 //    public void removeRow(String id) {
 //        verifyId(id);
 //        verifyRows(rows, errorRws);
@@ -83,7 +85,7 @@ public class Table {
             throw new IllegalArgumentException(errorId);
         }
     }
-
+    //TODO rewrite all the methods
 //    private void verifyColumnNamesCorrect(Map<String , String> rowDataPackage) {
 //        if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
 //            throw new IllegalArgumentException(errorArg);
