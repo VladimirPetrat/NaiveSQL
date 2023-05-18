@@ -1,4 +1,5 @@
 package model.data;
+import model.data.DataStructure;
 
 import lombok.Data;
 
@@ -11,14 +12,14 @@ public class Table<T> {
     private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
     private String errorRws = "[ERROR] [Trying to reach an empty row]";
     private HashSet<String> columnNames;
-    private HashMap<String, HashMap<String, T>> rows;
+    private HashMap<String, DataStructure<T>> rows;
 
     public Table(HashSet<String> columnNames) {
         this.columnNames = columnNames;
         rows = new HashMap<>();
     }
 
-    public String addRow(HashMap<String, T> rowDataPackage) {
+    public String addRow(DataStructure<T> rowDataPackage) {
         verifyColumnNamesCorrect(rowDataPackage);
 
         String id = generateUniqueId();
@@ -34,13 +35,13 @@ public class Table<T> {
         rows.remove(id);
     }
 
-    public void updateRowFieldValues(String id, HashMap<String, T> rowDataPackage) {
+    public void updateRowFieldValues(String id, DataStructure<T> rowDataPackage) {
         verifyIdAndColumns(id, rowDataPackage);
 
         rows.get(id).putAll(rowDataPackage);
     }
 
-    public void replaceRowFieldValues(String id, HashMap<String, T> rowDataPackage) {
+    public void replaceRowFieldValues(String id, DataStructure<T> rowDataPackage) {
         verifyIdAndColumns(id, rowDataPackage);
 
         var existingRow = rows.get(id);
@@ -53,7 +54,7 @@ public class Table<T> {
         return rows.isEmpty();
     }
 
-    private HashMap<String, HashMap<String, T>> verifyRows(HashMap<String, HashMap<String, T>> rows, String errorMessage) {
+    private HashMap<String, DataStructure<T>> verifyRows(HashMap<String, DataStructure<T>> rows, String errorMessage) {
         return Optional
                 .ofNullable(rows)
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage));
@@ -65,13 +66,13 @@ public class Table<T> {
         }
     }
 
-    private void verifyColumnNamesCorrect(HashMap<String, T> rowDataPackage) {
+    private void verifyColumnNamesCorrect(DataStructure<T> rowDataPackage) {
         if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
             throw new IllegalArgumentException(errorArg);
         }
     }
 
-    private void verifyIdAndColumns(String id, HashMap<String, T> rowDataPackage){
+    private void verifyIdAndColumns(String id, DataStructure<T> rowDataPackage){
         verifyId(id);
         verifyColumnNamesCorrect(rowDataPackage);
     }

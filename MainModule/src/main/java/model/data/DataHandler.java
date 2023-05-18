@@ -14,7 +14,7 @@ public class DataHandler {
         tables.put(tableName, new Table(columnNames));
     }
 
-    public void insertIntoTable(String tableName, HashMap<String, String> rowDataPackage) {
+    public <T> void insertIntoTable(String tableName, DataStructure<T> rowDataPackage) {
         var table = tables.get(tableName);
         table.addRow(rowDataPackage);
     }

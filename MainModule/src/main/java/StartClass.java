@@ -1,3 +1,4 @@
+import model.data.DataStructure;
 import model.data.Table;
 
 import java.util.HashMap;
@@ -12,6 +13,7 @@ public class StartClass {
         columns.add("age");
         Table myTable = new Table(columns);
 
+        /*
         HashMap<String, Object> data = new HashMap<>();
         data.put("first name", "Andrew");
         data.put("second name", "Kushyk");
@@ -34,6 +36,20 @@ public class StartClass {
 //        myTable.replaceRowFieldValues(id, newData);
 //        System.out.println(myTable.rowIsEmpty());
         System.out.println(myTable);
+
+         */
+
+
+        DataStructure<Integer> data2 = new DataStructure<>();
+        data2.put("name", "Andrew");
+
+        myTable.addRow(data2);
+
+        System.out.println(myTable);
+
+        // Print the values
+        System.out.println("Key: " + key);
+        System.out.println("Value: " + value);
 
     }
 }
