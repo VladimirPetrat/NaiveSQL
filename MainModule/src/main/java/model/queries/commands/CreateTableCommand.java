@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import model.data.DataHandler;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class CreateTableCommand extends AbstractCommand implements IQueryCommand
                 .split(" \\(");
         String tableName = commandArr[0];
         HashSet<String> columnNames = new HashSet<>(Arrays.asList(commandArr[1].split(",")));
-        dataHandler.createNewTable(tableName, columnNames);
+        HashSet<String> temp = new HashSet<>();
+        dataHandler.createNewTable(tableName, temp);
     }
 }

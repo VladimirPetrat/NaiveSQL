@@ -1,60 +1,78 @@
 package model.data;
-import model.data.DataStructure;
 
 import lombok.Data;
 
 import java.util.*;
 
 @Data
-public class Table<T> {
+public class Table {
 
     private String errorId = "[ERROR] [Incorrect ID]";
     private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
     private String errorRws = "[ERROR] [Trying to reach an empty row]";
     private HashSet<String> columnNames;
-    private HashMap<String, DataStructure<T>> rows;
+    private HashMap<String, List<DataStructure>> rows;
 
     public Table(HashSet<String> columnNames) {
         this.columnNames = columnNames;
         rows = new HashMap<>();
     }
 
-    public String addRow(DataStructure<T> rowDataPackage) {
-        verifyColumnNamesCorrect(rowDataPackage);
+    public Object getFieldValue(String Id, String fieldName) {
+        return rows
+                .get(Id)
+                .stream()
+                .filter(dataStructure -> dataStructure.getFieldName().equals(fieldName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Missing field name"))
+                .getValue();
+    }
+
+    public DataStructure getDataForFieldName(String Id, String fieldName) {
+        return rows
+                .get(Id)
+                .stream()
+                .filter(dataStructure -> dataStructure.getFieldName().equals(fieldName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Missing field name"));
+    }
+
+    public String addRow(List<DataStructure> dataPackage) {
+//        verifyColumnNamesCorrect(rowDataPackage);
 
         String id = generateUniqueId();
-        rows.put(id, rowDataPackage);
+        rows.put(id, dataPackage);
 
         return id;
     }
 
-    public void removeRow(String id) {
-        verifyId(id);
-        verifyRows(rows, errorRws);
+//    public void removeRow(String id) {
+//        verifyId(id);
+//        verifyRows(rows, errorRws);
+//
+//        rows.remove(id);
+//    }
 
-        rows.remove(id);
-    }
+//    public void updateRowFieldValues(String id, Map<String , String> rowDataPackage) {
+//        verifyIdAndColumns(id, rowDataPackage);
+//
+//        rows.get(id).putAll(rowDataPackage);
+//    }
 
-    public void updateRowFieldValues(String id, DataStructure<T> rowDataPackage) {
-        verifyIdAndColumns(id, rowDataPackage);
-
-        rows.get(id).putAll(rowDataPackage);
-    }
-
-    public void replaceRowFieldValues(String id, DataStructure<T> rowDataPackage) {
-        verifyIdAndColumns(id, rowDataPackage);
-
-        var existingRow = rows.get(id);
-        existingRow
-                .keySet()
-                .forEach(field -> existingRow.put(field, rowDataPackage.getOrDefault(field, null)));
-    }
+//    public void replaceRowFieldValues(String id,Map<String , String> rowDataPackage) {
+//        verifyIdAndColumns(id, rowDataPackage);
+//
+//        var existingRow = rows.get(id);
+//        existingRow
+//                .keySet()
+//                .forEach(field -> existingRow.put(field, rowDataPackage.getOrDefault(field, null)));
+//    }
 
     public boolean rowIsEmpty() {
         return rows.isEmpty();
     }
 
-    private HashMap<String, DataStructure<T>> verifyRows(HashMap<String, DataStructure<T>> rows, String errorMessage) {
+    private HashMap<String, DataStructure> verifyRows(HashMap<String, DataStructure> rows, String errorMessage) {
         return Optional
                 .ofNullable(rows)
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage));
@@ -66,16 +84,16 @@ public class Table<T> {
         }
     }
 
-    private void verifyColumnNamesCorrect(DataStructure<T> rowDataPackage) {
-        if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
-            throw new IllegalArgumentException(errorArg);
-        }
-    }
+//    private void verifyColumnNamesCorrect(Map<String , String> rowDataPackage) {
+//        if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
+//            throw new IllegalArgumentException(errorArg);
+//        }
+//    }
 
-    private void verifyIdAndColumns(String id, DataStructure<T> rowDataPackage){
-        verifyId(id);
-        verifyColumnNamesCorrect(rowDataPackage);
-    }
+//    private void verifyIdAndColumns(String id, Map<String , String> rowDataPackage){
+//        verifyId(id);
+//        verifyColumnNamesCorrect(rowDataPackage);
+//    }
 
     private String generateUniqueId() {
         String uniqueId;
