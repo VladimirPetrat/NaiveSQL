@@ -11,7 +11,7 @@ public class Table {
     private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
     private String errorRws = "[ERROR] [Trying to reach an empty row]";
     private HashSet<String> columnNames;
-    private HashMap<String, List<DataStructure>> rows;
+    private HashMap<String, List<DataObject>> rows;
 
     public Table(HashSet<String> columnNames) {
         this.columnNames = columnNames;
@@ -28,7 +28,7 @@ public class Table {
                 .getValue();
     }
 
-    public DataStructure getDataForFieldName(String Id, String fieldName) {
+    public DataObject getDataForFieldName(String Id, String fieldName) {
         return rows
                 .get(Id)
                 .stream()
@@ -37,7 +37,7 @@ public class Table {
                 .orElseThrow(() -> new IllegalArgumentException("Missing field name"));
     }
 
-    public String addRow(List<DataStructure> dataPackage) {
+    public String addRow(List<DataObject> dataPackage) {
 //        verifyColumnNamesCorrect(rowDataPackage);
 
         String id = generateUniqueId();
@@ -72,7 +72,7 @@ public class Table {
         return rows.isEmpty();
     }
 
-    private HashMap<String, DataStructure> verifyRows(HashMap<String, DataStructure> rows, String errorMessage) {
+    private HashMap<String, DataObject> verifyRows(HashMap<String, DataObject> rows, String errorMessage) {
         return Optional
                 .ofNullable(rows)
                 .orElseThrow(() -> new IllegalArgumentException(errorMessage));

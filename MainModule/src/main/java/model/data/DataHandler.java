@@ -21,7 +21,7 @@ public class DataHandler {
         return table;
     }
 
-    public void insertIntoTable(String tableName, DataStructure rowDataPackage) {
+    public void insertIntoTable(String tableName, DataObject rowDataPackage) {
         var table = tables.get(tableName);
 //        table.addRow(rowDataPackage);
     }

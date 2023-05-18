@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class DataStructure {
+public class DataObject {
     private String fieldName;
     private Object value;
     private Class type;
