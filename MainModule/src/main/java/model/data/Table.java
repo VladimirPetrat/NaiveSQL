@@ -30,17 +30,6 @@ public class Table {
                 .getValue();
     }
 
-    public DataObject getDataForFieldName(String Id, String fieldName) {
-        verifyIdAndField(Id, fieldName);
-
-        return rows
-                .get(Id)
-                .stream()
-                .filter(dataStructure -> dataStructure.getFieldName().equals(fieldName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Missing field name"));
-    }
-
     public String addRow(List<DataObject> dataPackage) {
         verifyColumnNamesCorrect(dataPackage);
 

@@ -26,16 +26,10 @@ public class StartClass {
 
         List<DataObject> newData = List.of(an, an_age);
         table.updateRowFieldValues(id, newData);
-        DataObject age = table.getDataForFieldName(id, "age");
-        Object o = age
-                .getType()
-                .cast(age.getValue());
+        Object age = table.getFieldValue(id, "age");
 
-        DataObject name = table.getDataForFieldName(id, "name");
-        Object o2 = name
-                .getType()
-                .cast(name.getValue());
-        System.out.println(o + " " + o2);
+        Object name = table.getFieldValue(id, "name");
+        System.out.println(name + " " + age);
 
         Object o3 = table.getFieldValue(id, "age");
         System.out.println(o3);
