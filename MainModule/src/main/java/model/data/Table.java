@@ -54,11 +54,30 @@ public class Table {
         rows.remove(id);
     }
 
-//    public void updateRowFieldValues(String id, Map<String , String> rowDataPackage) {
-//        verifyIdAndColumns(id, rowDataPackage);
+//    public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
+//        verifyIdAndColumns(id, dataPackage);
 //
-//        rows.get(id).putAll(rowDataPackage);
+//        rows.get(id).putAll(dataPackage);
 //    }
+
+    public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
+        verifyIdAndColumns(id, dataPackage);
+
+        List<DataObject> existingRow = rows.get(id);
+        for (DataObject newDataObject : dataPackage) {
+            String fieldName = newDataObject.getFieldName();
+            Optional<DataObject> existingDataObject = existingRow.stream()
+                    .filter(dataObject -> dataObject.getFieldName().equals(fieldName))
+                    .findFirst();
+            if (existingDataObject.isPresent()) {
+                DataObject updatedDataObject = existingDataObject.get();
+                updatedDataObject.setValue(newDataObject.getValue());
+            } else {
+                existingRow.add(newDataObject);
+            }
+        }
+    }
+
 
 //    public void replaceRowFieldValues(String id,Map<String , String> rowDataPackage) {
 //        verifyIdAndColumns(id, rowDataPackage);
@@ -96,11 +115,10 @@ public class Table {
         }
     }
 
-    //TODO rewrite
-//    private void verifyIdAndColumns(String id, Map<String , String> rowDataPackage){
-//        verifyId(id);
-//        verifyColumnNamesCorrect(rowDataPackage);
-//    }
+    private void verifyIdAndColumns(String id, List<DataObject> dataPackage){
+        verifyId(id);
+        verifyColumnNamesCorrect(dataPackage);
+    }
 
     private String generateUniqueId() {
         String uniqueId;

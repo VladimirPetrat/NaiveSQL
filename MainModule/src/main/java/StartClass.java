@@ -20,17 +20,22 @@ public class StartClass {
 
         Table table = new DataHandler().createNewTable("Table", set);
         String id = table.addRow(dataStructures);
+
+        DataObject an = new DataObject("name", "Andrew", String.class);
+        DataObject an_age = new DataObject("age", 21, Integer.class);
+
+        List<DataObject> newData = List.of(an, an_age);
+        table.updateRowFieldValues(id, newData);
         DataObject age = table.getDataForFieldName(id, "age");
         Object o = age
                 .getType()
                 .cast(age.getValue());
 
-        Object info = table.getFieldValue(id, "name");
+        DataObject name = table.getDataForFieldName(id, "name");
+        Object o2 = name
+                .getType()
+                .cast(name.getValue());
 
-        System.out.println(o + " " + info);
-
-        table.removeRow(id);
-
-        System.out.println(o);
+        System.out.println(o + " " + o2);
     }
 }
