@@ -28,5 +28,9 @@ public class StartClass {
         Object info = table.getFieldValue(id, "name");
 
         System.out.println(o + " " + info);
+
+        table.removeRow(id);
+
+        System.out.println(o);
     }
 }

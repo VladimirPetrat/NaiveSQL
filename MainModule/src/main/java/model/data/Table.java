@@ -3,7 +3,6 @@ package model.data;
 import lombok.Data;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Data
 public class Table {
@@ -48,12 +47,12 @@ public class Table {
     }
 
     //TODO rewrite all the methods
-//    public void removeRow(String id) {
-//        verifyId(id);
-//        verifyRows(rows, errorRws);
-//
-//        rows.remove(id);
-//    }
+    public void removeRow(String id) {
+        verifyId(id);
+        verifyRows(rows, errorRws);
+
+        rows.remove(id);
+    }
 
 //    public void updateRowFieldValues(String id, Map<String , String> rowDataPackage) {
 //        verifyIdAndColumns(id, rowDataPackage);
@@ -74,18 +73,20 @@ public class Table {
         return rows.isEmpty();
     }
 
-    private HashMap<String, DataObject> verifyRows(HashMap<String, DataObject> rows, String errorMessage) {
-        return Optional
-                .ofNullable(rows)
-                .orElseThrow(() -> new IllegalArgumentException(errorMessage));
+    private void verifyRows(HashMap<String, List<DataObject>> rows, String errorMessage) {
+        Objects.requireNonNull(rows, "Rows cannot be null.");
+        if (rows.isEmpty()) {
+            throw new IllegalArgumentException(errorMessage);
+        }
     }
+
 
     private void verifyId(String id) {
         if (!rows.containsKey(id)) {
             throw new IllegalArgumentException(errorId);
         }
     }
-    //TODO rewrite all the methods
+
     private void verifyColumnNamesCorrect(List<DataObject> dataPackage) {
         List<String> fieldNames = dataPackage.stream()
             .map(DataObject::getFieldName)
@@ -95,6 +96,7 @@ public class Table {
         }
     }
 
+    //TODO rewrite
 //    private void verifyIdAndColumns(String id, Map<String , String> rowDataPackage){
 //        verifyId(id);
 //        verifyColumnNamesCorrect(rowDataPackage);
