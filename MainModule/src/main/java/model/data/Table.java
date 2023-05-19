@@ -19,6 +19,8 @@ public class Table {
     }
 
     public Object getFieldValue(String Id, String fieldName) {
+        verifyIdAndField(Id, fieldName);
+
         return rows
                 .get(Id)
                 .stream()
@@ -29,6 +31,8 @@ public class Table {
     }
 
     public DataObject getDataForFieldName(String Id, String fieldName) {
+        verifyIdAndField(Id, fieldName);
+
         return rows
                 .get(Id)
                 .stream()
@@ -46,7 +50,6 @@ public class Table {
         return id;
     }
 
-    //TODO rewrite all the methods
     public void removeRow(String id) {
         verifyId(id);
         verifyRows(rows, errorRws);
@@ -72,16 +75,6 @@ public class Table {
         }
     }
 
-
-//    public void replaceRowFieldValues(String id,Map<String , String> rowDataPackage) {
-//        verifyIdAndColumns(id, rowDataPackage);
-//
-//        var existingRow = rows.get(id);
-//        existingRow
-//                .keySet()
-//                .forEach(field -> existingRow.put(field, rowDataPackage.getOrDefault(field, null)));
-//    }
-
     public boolean rowIsEmpty() {
         return rows.isEmpty();
     }
@@ -93,6 +86,11 @@ public class Table {
         }
     }
 
+    private void verifyField(String arg) {
+        if (arg.isEmpty()) {
+            throw new IllegalArgumentException(errorArg);
+        }
+    }
 
     private void verifyId(String id) {
         if (!rows.containsKey(id)) {
@@ -102,14 +100,19 @@ public class Table {
 
     private void verifyColumnNamesCorrect(List<DataObject> dataPackage) {
         List<String> fieldNames = dataPackage.stream()
-            .map(DataObject::getFieldName)
-            .toList();
+                .map(DataObject::getFieldName)
+                .toList();
         if (dataPackage.isEmpty() || !columnNames.containsAll(fieldNames)) {
             throw new IllegalArgumentException(errorArg);
         }
     }
 
-    private void verifyIdAndColumns(String id, List<DataObject> dataPackage){
+    private void verifyIdAndField(String id, String field) {
+        verifyId(id);
+        verifyField(field);
+    }
+
+    private void verifyIdAndColumns(String id, List<DataObject> dataPackage) {
         verifyId(id);
         verifyColumnNamesCorrect(dataPackage);
     }

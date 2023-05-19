@@ -9,11 +9,11 @@ public class StartClass {
 
     public static void main(String... args) {
 
-        DataObject olegName= new DataObject("name", "Oleg", String.class);
+        DataObject olegName = new DataObject("name", "Oleg", String.class);
         DataObject olegAge = new DataObject("age", 280, Integer.class);
 
         List<DataObject> dataStructures = List.of(olegName, olegAge);
-        
+
         HashSet<String> set = new HashSet<>();
         set.add("name");
         set.add("age");
@@ -35,7 +35,9 @@ public class StartClass {
         Object o2 = name
                 .getType()
                 .cast(name.getValue());
-
         System.out.println(o + " " + o2);
+
+        Object o3 = table.getFieldValue(id, "age");
+        System.out.println(o3);
     }
 }
