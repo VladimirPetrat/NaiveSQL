@@ -54,12 +54,6 @@ public class Table {
         rows.remove(id);
     }
 
-//    public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
-//        verifyIdAndColumns(id, dataPackage);
-//
-//        rows.get(id).putAll(dataPackage);
-//    }
-
     public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
         verifyIdAndColumns(id, dataPackage);
 
