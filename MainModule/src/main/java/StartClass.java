@@ -25,6 +25,8 @@ public class StartClass {
                 .getType()
                 .cast(age.getValue());
 
-        System.out.println(o);
+        Object info = table.getFieldValue(id, "name");
+
+        System.out.println(o + " " + info);
     }
 }

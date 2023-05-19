@@ -3,6 +3,7 @@ package model.data;
 import lombok.Data;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 public class Table {
@@ -38,8 +39,7 @@ public class Table {
     }
 
     public String addRow(List<DataObject> dataPackage) {
-        //TODO uncomment when it's done
-//        verifyColumnNamesCorrect(dataPackage);
+        verifyColumnNamesCorrect(dataPackage);
 
         String id = generateUniqueId();
         rows.put(id, dataPackage);
@@ -86,11 +86,14 @@ public class Table {
         }
     }
     //TODO rewrite all the methods
-//    private void verifyColumnNamesCorrect(Map<String , String> rowDataPackage) {
-//        if (rowDataPackage.isEmpty() || !columnNames.containsAll(rowDataPackage.keySet())) {
-//            throw new IllegalArgumentException(errorArg);
-//        }
-//    }
+    private void verifyColumnNamesCorrect(List<DataObject> dataPackage) {
+        List<String> fieldNames = dataPackage.stream()
+            .map(DataObject::getFieldName)
+            .toList();
+        if (dataPackage.isEmpty() || !columnNames.containsAll(fieldNames)) {
+            throw new IllegalArgumentException(errorArg);
+        }
+    }
 
 //    private void verifyIdAndColumns(String id, Map<String , String> rowDataPackage){
 //        verifyId(id);
