@@ -52,10 +52,6 @@ public class Table {
         rows.remove(id);
     }
 
-    public void removeFields() {
-        //TODO
-    }
-
     public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
         verifyIdAndColumns(id, dataPackage);
 
