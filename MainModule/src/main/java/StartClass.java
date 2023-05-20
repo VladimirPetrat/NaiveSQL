@@ -33,5 +33,11 @@ public class StartClass {
 
         Object o3 = table.getFieldValue(id, "age");
         System.out.println(o3);
+
+        List<DataObject> myList = table.returnRow(id);
+
+        for (DataObject dataObject : myList) {
+            System.out.println(dataObject);
+        }
     }
 }

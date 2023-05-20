@@ -39,11 +39,21 @@ public class Table {
         return id;
     }
 
+    public List<DataObject> returnRow(String id) {
+        verifyField(id);
+
+        return rows.get(id);
+    }
+
     public void removeRow(String id) {
         verifyId(id);
         verifyRows(rows, errorRws);
 
         rows.remove(id);
+    }
+
+    public void removeFields() {
+        //TODO
     }
 
     public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
