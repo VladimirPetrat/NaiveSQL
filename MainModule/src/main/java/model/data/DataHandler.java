@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 @AllArgsConstructor
 public class DataHandler {
@@ -21,7 +22,7 @@ public class DataHandler {
         return table;
     }
 
-    public void insertIntoTable(String tableName, DataObject rowDataPackage) {
+    public void insertIntoTable(String tableName, List<DataObject> objects) {
         var table = tables.get(tableName);
 //        table.addRow(rowDataPackage);
     }

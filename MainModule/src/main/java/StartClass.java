@@ -19,19 +19,20 @@ public class StartClass {
         set.add("age");
 
         Table table = new DataHandler().createNewTable("Table", set);
-        String id = table.addRow(dataStructures);
+        String id = table.addNewRow(dataStructures);
 
         DataObject an = new DataObject("name", "Andrew", String.class);
         DataObject an_age = new DataObject("age", 21, Integer.class);
 
         List<DataObject> newData = List.of(an, an_age);
-        table.updateRowFieldValues(id, newData);
-        Object age = table.getFieldValue(id, "age");
+        table.insertRowFieldValues(id, newData);
+        DataObject ageObject = table.getFieldValueObject(id, "age");
+        Integer age = (Integer) ageObject.getType().cast(ageObject.getValue());
 
-        Object name = table.getFieldValue(id, "name");
-        System.out.println(name + " " + age);
+        DataObject nameObject = table.getFieldValueObject(id, "name");
+        String name = (String) nameObject.getType().cast(nameObject.getValue());
 
-        Object o3 = table.getFieldValue(id, "age");
-        System.out.println(o3);
+        System.out.println(name);
+        System.out.println(age);
     }
 }
