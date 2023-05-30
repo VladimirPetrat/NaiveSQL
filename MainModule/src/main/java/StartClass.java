@@ -1,24 +1,37 @@
-import models.PersonDTO;
+import model.data.DataHandler;
+import model.data.DataObject;
+import model.data.Table;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class StartClass {
 
     public static void main(String... args) {
 
-        PersonDTO me = new PersonDTO("1", "Andy", "2001");
+        DataObject olegName = new DataObject("name", "Oleg", String.class);
+        DataObject olegAge = new DataObject("age", 280, Integer.class);
 
-        System.out.println(me.returnPersonDTO());
+        List<DataObject> dataStructures = List.of(olegName, olegAge);
 
-        me.replaceField("id", "2");
-        me.replaceField("name", "Andrew");
-        me.replaceField("year", "1999");
-        System.out.println(me.returnPersonDTO());
+        HashSet<String> set = new HashSet<>();
+        set.add("name");
+        set.add("age");
 
-        me.removeField("year");
-        System.out.println(System.lineSeparator() + "ID = " + me.returnField("id") +
-                            System.lineSeparator() + "Name = " + me.returnField("name")+
-                            System.lineSeparator() + "Year = " + me.returnField("year"));
+        Table table = new DataHandler().createNewTable("Table", set);
+        String id = table.addRow(dataStructures);
 
-        me.addField("second_name", "Kushyk");
-        System.out.println(me.returnPersonDTO());
+        DataObject an = new DataObject("name", "Andrew", String.class);
+        DataObject an_age = new DataObject("age", 21, Integer.class);
+
+        List<DataObject> newData = List.of(an, an_age);
+        table.updateRowFieldValues(id, newData);
+        Object age = table.getFieldValue(id, "age");
+
+        Object name = table.getFieldValue(id, "name");
+        System.out.println(name + " " + age);
+
+        Object o3 = table.getFieldValue(id, "age");
+        System.out.println(o3);
     }
 }

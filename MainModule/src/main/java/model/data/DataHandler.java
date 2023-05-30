@@ -8,14 +8,21 @@ import java.util.HashSet;
 @AllArgsConstructor
 public class DataHandler {
     //TODO add functionality regarding data operating
-    private HashMap<String, TableHolder> tables;
+    private HashMap<String, Table> tables;
 
-    public void createNewTable(String tableName, HashSet<String> columnNames) {
-        tables.put(tableName, new TableHolder(columnNames));
+    //TODO Add proper table
+    public DataHandler() {
+        tables = new HashMap<>();
     }
 
-    public void insertIntoTable(String tableName, HashMap<String, String> rowDataPackage) {
+    public Table createNewTable(String tableName, HashSet<String> columnNames) {
+        var table = new Table(columnNames);
+        tables.put(tableName, new Table(columnNames));
+        return table;
+    }
+
+    public void insertIntoTable(String tableName, DataObject rowDataPackage) {
         var table = tables.get(tableName);
-        table.addRow(rowDataPackage);
+//        table.addRow(rowDataPackage);
     }
 }
