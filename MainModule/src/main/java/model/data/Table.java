@@ -1,83 +1,128 @@
 package model.data;
 
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-@Data
 public class Table {
 
-    private String errorId = "[ERROR] [Incorrect ID]";
-    private String errorArg = "[ERROR] [Incorrect rows in insert data package]";
-    private String errorRws = "[ERROR] [Trying to reach an empty row]";
+    private DataHandler dataHandler;
+
+    private final String errorId = "[ERROR] [Incorrect ID]";
+    private final String errorArg = "[ERROR] [Incorrect rows in insert data package]";
+    private final String errorRws = "[ERROR] [Trying to reach an empty row]";
+
+    @Getter
     private HashSet<String> columnNames;
-    private HashMap<String, List<DataObject>> rows;
+    private HashMap<String, TableRow> rows;
 
     public Table(HashSet<String> columnNames) {
         this.columnNames = columnNames;
         rows = new HashMap<>();
     }
 
-    public Object getFieldValue(String Id, String fieldName) {
-        verifyIdAndField(Id, fieldName);
-
-        return rows
-                .get(Id)
-                .stream()
-                .filter(dataStructure -> dataStructure.getFieldName().equals(fieldName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Missing field name"))
-                .getValue();
-    }
-
-    public String addRow(List<DataObject> dataPackage) {
+    public String addNewRow(List<DataObject> dataPackage) {
         verifyColumnNamesCorrect(dataPackage);
 
         String id = generateUniqueId();
-        rows.put(id, dataPackage);
+        rows.put(id, new TableRow(dataPackage));
 
         return id;
     }
 
-    public List<DataObject> returnRow(String id) {
+    public void addNewColumn(String columnName) {
+        verifyColumnNameCorrect(columnName);
+
+        columnNames.add(columnName);
+
+        //TODO Possible refactor due to DataObject updates
+        rows.forEach((key, value) -> value.addField(new DataObject(columnName, new Object(), Object.class)));
+    }
+
+    public DataObject getFieldValueObject(String Id, String fieldName) {
+        verifyIdAndField(Id, fieldName);
+
+        return rows
+                .get(Id)
+                .getFieldDataObject(fieldName);
+    }
+
+    public List<DataObject> getFieldsForId(String id) {
         verifyField(id);
 
-        return rows.get(id);
+        return rows
+                .get(id)
+                .getFields();
+    }
+
+    public List<DataObject> getFieldsForColumnName(String columnName) {
+        return rows
+                .values()
+                .stream()
+                .map(value -> value.getFieldDataObject(columnName))
+                .collect(Collectors.toList());
+    }
+
+    public void insertRowFieldValues(String id, List<DataObject> dataPackage) {
+        dataPackage.forEach(dataObject -> insertRowFieldValue(id, dataObject));
+    }
+
+    public void insertRowFieldValue(String id, DataObject dataObject) {
+        verifyId(id);
+        verifyColumnNameCorrect(dataObject.getFieldName());
+
+        rows.get(id).insertField(dataObject);
     }
 
     public void removeRow(String id) {
         verifyId(id);
-        verifyRows(rows, errorRws);
 
         rows.remove(id);
     }
 
-    public void updateRowFieldValues(String id, List<DataObject> dataPackage) {
-        verifyIdAndColumns(id, dataPackage);
-
-        List<DataObject> existingRow = rows.get(id);
-        for (DataObject newDataObject : dataPackage) {
-            String fieldName = newDataObject.getFieldName();
-            Optional<DataObject> existingDataObject = existingRow.stream()
-                    .filter(dataObject -> dataObject.getFieldName().equals(fieldName))
-                    .findFirst();
-            if (existingDataObject.isPresent()) {
-                DataObject updatedDataObject = existingDataObject.get();
-                updatedDataObject.setValue(newDataObject.getValue());
-            } else {
-                existingRow.add(newDataObject);
-            }
-        }
+    public void removeRows(HashSet<String> ids) {
+        ids.forEach(this::removeRow);
     }
 
-    public boolean rowIsEmpty() {
-        return rows.isEmpty();
+    public void removeRowValue(String id, String fieldName) {
+        verifyColumnNameAndIdCorrect(id, fieldName);
+        rows.get(id).removeFieldValue(fieldName);
     }
 
-    private void verifyRows(HashMap<String, List<DataObject>> rows, String errorMessage) {
+    public void removeColumn(String columnName) {
+        verifyColumnNameCorrect(columnName);
+
+        rows
+                .values()
+                .forEach(row -> row.removeField(columnName));
+    }
+
+    public void removeColumns(HashSet<String> columnNames) {
+        columnNames.forEach(this::removeColumn);
+    }
+
+    public void removeColumnValues(String columnName) {
+        verifyColumnNameCorrect(columnName);
+
+        rows
+                .values()
+                .forEach(row -> row.removeFieldValue(columnName));
+    }
+
+    public void removeColumnsValues(HashSet<String> columnNames) {
+        columnNames.forEach(this::removeColumnValues);
+    }
+
+    private void verifyColumnNameAndIdCorrect(String columnName, String id) {
+        verifyColumnNameCorrect(columnName);
+        verifyId(id);
+    }
+
+    private void verifyRows(HashMap<String, TableRow> rows) {
         Objects.requireNonNull(rows, "Rows cannot be null.");
         if (rows.isEmpty()) {
-            throw new IllegalArgumentException(errorMessage);
+            throw new IllegalArgumentException("[ERROR] [Trying to reach an empty row]");
         }
     }
 
@@ -90,6 +135,12 @@ public class Table {
     private void verifyId(String id) {
         if (!rows.containsKey(id)) {
             throw new IllegalArgumentException(errorId);
+        }
+    }
+
+    private void verifyColumnNameCorrect(String columnName) {
+        if (!columnNames.contains(columnName)) {
+            throw new IllegalArgumentException(errorArg);
         }
     }
 
