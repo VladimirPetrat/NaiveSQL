@@ -124,11 +124,9 @@ public class Table {
     }
     
     private void verifyRows(HashMap<String, TableRow> rows) {
-        
-        
         Objects.requireNonNull(rows, "Rows cannot be null.");
         if (rows.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] [Trying to reach an empty row]");
+            throw new IllegalArgumentException(errorRws);
         }
     }
 
@@ -145,7 +143,7 @@ public class Table {
     }
     
     private void verifyMultIds(HashSet<String> ids){
-        if(ids.isEmpty()) {
+        if(ids.isEmpty() || !rows.keySet().containsAll(ids)) {
             throw new IllegalArgumentException(errorId);
         }
     }
@@ -166,7 +164,7 @@ public class Table {
     }
     
     private void verifyMultColumns(HashSet<String> columnNames) {
-        if(columnNames.isEmpty()) {
+        if(columnNames.isEmpty() || !columnNames.containsAll(columnNames)) {
             throw new IllegalArgumentException(errorArg);
         }
     }
