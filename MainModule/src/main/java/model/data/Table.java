@@ -57,6 +57,8 @@ public class Table {
     }
 
     public List<DataObject> getFieldsForColumnName(String columnName) {
+        verifyField(columnName);
+        
         return rows
                 .values()
                 .stream()
@@ -65,6 +67,8 @@ public class Table {
     }
 
     public void insertRowFieldValues(String id, List<DataObject> dataPackage) {
+        verifyIdAndColumns(id, dataPackage);
+        
         dataPackage.forEach(dataObject -> insertRowFieldValue(id, dataObject));
     }
 
@@ -82,11 +86,14 @@ public class Table {
     }
 
     public void removeRows(HashSet<String> ids) {
+        verifyMultIds(ids);
+        
         ids.forEach(this::removeRow);
     }
 
     public void removeRowValue(String id, String fieldName) {
-        verifyColumnNameAndIdCorrect(id, fieldName);
+        verifyIdAndField(id, fieldName);
+        
         rows.get(id).removeFieldValue(fieldName);
     }
 
@@ -111,15 +118,14 @@ public class Table {
     }
 
     public void removeColumnsValues(HashSet<String> columnNames) {
+        verifyMultColumns(columnNames);
+        
         columnNames.forEach(this::removeColumnValues);
     }
-
-    private void verifyColumnNameAndIdCorrect(String columnName, String id) {
-        verifyColumnNameCorrect(columnName);
-        verifyId(id);
-    }
-
+    
     private void verifyRows(HashMap<String, TableRow> rows) {
+        
+        
         Objects.requireNonNull(rows, "Rows cannot be null.");
         if (rows.isEmpty()) {
             throw new IllegalArgumentException("[ERROR] [Trying to reach an empty row]");
@@ -137,6 +143,12 @@ public class Table {
             throw new IllegalArgumentException(errorId);
         }
     }
+    
+    private void verifyMultIds(HashSet<String> ids){
+        if(ids.isEmpty()) {
+            throw new IllegalArgumentException(errorId);
+        }
+    }
 
     private void verifyColumnNameCorrect(String columnName) {
         if (!columnNames.contains(columnName)) {
@@ -149,6 +161,12 @@ public class Table {
                 .map(DataObject::getFieldName)
                 .toList();
         if (dataPackage.isEmpty() || !columnNames.containsAll(fieldNames)) {
+            throw new IllegalArgumentException(errorArg);
+        }
+    }
+    
+    private void verifyMultColumns(HashSet<String> columnNames) {
+        if(columnNames.isEmpty()) {
             throw new IllegalArgumentException(errorArg);
         }
     }
