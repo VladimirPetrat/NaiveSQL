@@ -11,7 +11,6 @@ public class Table {
 
     private final String errorId = "[ERROR] [Incorrect ID]";
     private final String errorArg = "[ERROR] [Incorrect rows in insert data package]";
-    private final String errorRws = "[ERROR] [Trying to reach an empty row]";
 
     @Getter
     private HashSet<String> columnNames;
@@ -123,12 +122,6 @@ public class Table {
         columnNames.forEach(this::removeColumnValues);
     }
     
-    private void verifyRows(HashMap<String, TableRow> rows) {
-        Objects.requireNonNull(rows, "Rows cannot be null.");
-        if (rows.isEmpty()) {
-            throw new IllegalArgumentException(errorRws);
-        }
-    }
 
     private void verifyField(String arg) {
         if (arg.isEmpty()) {
