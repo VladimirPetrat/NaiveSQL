@@ -29,6 +29,19 @@ public class Table {
 
         return id;
     }
+    
+    public List<String> addNewRows(List<List<DataObject>> dataPackages) {
+        List<String> ids = new ArrayList<>();
+    
+        for (List<DataObject> dataPackage : dataPackages) {
+            verifyColumnNamesCorrect(dataPackage);
+            String id = generateUniqueId();
+            rows.put(id, new TableRow(dataPackage));
+            ids.add(id);
+        }
+    
+        return ids;
+    }
 
     public void addNewColumn(String columnName) {
         verifyColumnNameCorrect(columnName);
