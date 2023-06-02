@@ -26,4 +26,8 @@ public class DataHandler {
         var table = tables.get(tableName);
 //        table.addRow(rowDataPackage);
     }
+    
+    public boolean tableExists(String customers) {
+        return tables.containsKey(customers);
+    }
 }
