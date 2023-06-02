@@ -2,6 +2,7 @@ package model.data;
 
 import lombok.Getter;
 
+import javax.xml.datatype.DatatypeConstants;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -86,7 +87,6 @@ public class Table {
 
     public void insertRowFieldValue(String id, DataObject dataObject) {
         verifyId(id);
-        verifyColumnNameCorrect(dataObject.getFieldName());
 
         rows.get(id).insertField(dataObject);
     }
@@ -161,9 +161,9 @@ public class Table {
     }
 
     private void verifyColumnNamesCorrect(List<DataObject> dataPackage) {
-        List<String> fieldNames = dataPackage.stream()
+        Set<String> fieldNames = dataPackage.stream()
                 .map(DataObject::getFieldName)
-                .toList();
+                .collect(Collectors.toSet());
         if (dataPackage.isEmpty() || !columnNames.containsAll(fieldNames)) {
             throw new IllegalArgumentException(errorArg);
         }
