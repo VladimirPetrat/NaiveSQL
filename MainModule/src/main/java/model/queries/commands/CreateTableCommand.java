@@ -18,7 +18,7 @@ public class CreateTableCommand extends AbstractCommand implements IQueryCommand
         String[] commandArr = commandLine
                 .replace("\\);", "")
                 .split(" \\(");
-        String tableName = commandArr[0];
+        String tableName = commandArr[0].replace("CREATE TABLE ", "");
         HashSet<String> columnNames = new HashSet<>(Arrays.asList(commandArr[1].split(",")));
         dataHandler.createNewTable(tableName, columnNames);
     }
