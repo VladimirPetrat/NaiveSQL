@@ -1,6 +1,7 @@
 package model.queries.commands;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import model.data.DataHandler;
 import org.junit.Test;
 
@@ -15,12 +16,17 @@ public class CreateTableCommand extends AbstractCommand implements IQueryCommand
     
     @Override
     public void executeCommand(String commandLine) {
-        String[] commandArr = commandLine
-                .replace("\\);", "")
-                .split(" \\(");
-        String tableName = commandArr[0].replace("CREATE TABLE ", "");
-        HashSet<String> columnNames = new HashSet<>(Arrays.asList(commandArr[1].split(",")));
-        dataHandler.createNewTable(tableName, columnNames);
+        if (commandLine.endsWith(";")) {
+            commandLine = commandLine.substring(0, commandLine.length() - 1);
+        }
+        
+        String[] commandArr = commandLine.split("\\s+");
+        String commandType = commandArr[0];
+        String tableName = commandArr[2];
+        
+        //TODO: fix it
+        HashSet<String> columns = new HashSet<>(Arrays.asList(commandArr[3].split(",")));
+        dataHandler.createNewTable(tableName, columns);
     }
     
     @Test
