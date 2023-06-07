@@ -35,10 +35,7 @@ public class Table {
         List<String> ids = new ArrayList<>();
     
         for (List<DataObject> dataPackage : dataPackages) {
-            verifyColumnNamesCorrect(dataPackage);
-            String id = generateUniqueId();
-            rows.put(id, new TableRow(dataPackage));
-            ids.add(id);
+            ids.add(addNewRow(dataPackage));
         }
     
         return ids;
