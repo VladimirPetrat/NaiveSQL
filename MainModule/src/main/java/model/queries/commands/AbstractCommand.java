@@ -5,5 +5,5 @@ import model.data.DataHandler;
 
 public abstract class AbstractCommand {
 
-    public DataHandler dataHandler = new DataHandler();
+    public DataHandler dataHandler;
 }

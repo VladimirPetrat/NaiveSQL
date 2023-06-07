@@ -28,6 +28,7 @@ public class DataHandler {
     }
     
     public boolean tableExists(String customers) {
-        return tables.containsKey(customers);
+//        return tables.containsKey(customers);
+        return tables.containsKey(customers) && tables.keySet().equals(customers);
     }
 }
