@@ -8,6 +8,5 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public abstract class QueryElement {
-
-    private List<QueryElement> queryComposition;
+	private List<QueryElement> queryComposition;
 }
