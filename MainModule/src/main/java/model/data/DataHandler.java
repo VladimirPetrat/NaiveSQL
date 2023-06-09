@@ -22,6 +22,11 @@ public class DataHandler {
 		return table;
 	}
 	
+	public HashSet<String> returnTable(String name) {
+		Table table = tables.get(name);
+		return table.getColumnNames();
+	}
+	
 	public void insertIntoTable(String tableName, List<DataObject> objects) {
 		var table = tables.get(tableName);
 //        table.addRow(rowDataPackage);

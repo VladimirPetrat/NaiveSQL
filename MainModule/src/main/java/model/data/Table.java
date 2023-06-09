@@ -49,6 +49,10 @@ public class Table {
 		rows.forEach((key, value) -> value.addField(new DataObject(columnName, new Object(), Object.class)));
 	}
 	
+	public HashSet<String> getColumnNames() {
+		return columnNames;
+	}
+	
 	public DataObject getFieldValueObject(String Id, String fieldName) {
 		verifyIdAndField(Id, fieldName);
 		
