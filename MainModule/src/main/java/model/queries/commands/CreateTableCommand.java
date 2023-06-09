@@ -21,10 +21,8 @@ public class CreateTableCommand extends AbstractCommand implements IQueryCommand
 		}
 		
 		String[] commandArr = commandLine.split("\\s+");
-		String commandType = commandArr[0];
 		String tableName = commandArr[2];
 		
-		//TODO: fix it
 		HashSet<String> columns = new HashSet<>(Arrays.asList(commandArr[3].split(",")));
 		dataHandler.createNewTable(tableName, columns);
 		
