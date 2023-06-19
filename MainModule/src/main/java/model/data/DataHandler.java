@@ -17,7 +17,7 @@ public class DataHandler {
     }
 
     public Table createNewTable(String tableName, HashSet<String> columnNames) {
-        var table = Table.create((columnNames));
+        var table = Table.create(columnNames);
         tables.put(tableName, Table.create(columnNames));
         return table;
     }
