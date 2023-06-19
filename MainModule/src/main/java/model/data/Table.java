@@ -11,12 +11,19 @@ public class Table {
     private final String errorArg = "[ERROR] [Incorrect rows in insert data package]";
     private DataHandler dataHandler;
     @Getter
-    private final HashSet<String> columnNames;
-    private final HashMap<String, TableRow> rows;
+    private HashSet<String> columnNames;
+    private HashMap<String, TableRow> rows;
+    
+    private Table(){}
 
-    public Table(HashSet<String> columnNames) {
-        this.columnNames = columnNames;
-        rows = new HashMap<>();
+    public static Table create(HashSet<String> columnNames) {
+        Table table = new Table();
+        
+        table.verifyMultColumns(columnNames);
+        table.columnNames = columnNames;
+        table.rows = new HashMap<>();
+        
+        return table;
     }
 
     public String addNewRow(List<DataObject> dataPackage) {
