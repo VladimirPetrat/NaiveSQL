@@ -17,13 +17,22 @@ public class DataHandler {
     }
 
     public Table createNewTable(String tableName, HashSet<String> columnNames) {
-        var table = new Table(columnNames);
-        tables.put(tableName, new Table(columnNames));
+        var table = Table.create(columnNames);
+        tables.put(tableName, Table.create(columnNames));
         return table;
+    }
+
+    public HashSet<String> returnTable(String name) {
+        Table table = tables.get(name);
+        return table.getColumnNames();
     }
 
     public void insertIntoTable(String tableName, List<DataObject> objects) {
         var table = tables.get(tableName);
 //        table.addRow(rowDataPackage);
+    }
+
+    public boolean tableExists(String customers) {
+        return tables.containsKey(customers);
     }
 }

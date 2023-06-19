@@ -10,7 +10,7 @@ public class TableRow {
     private final String incorrectFieldNameError = "Incorrect field name";
 
     @Getter
-    private List<DataObject> fields;
+    private final List<DataObject> fields;
 
     public TableRow(List<DataObject> objects) {
         fields = objects;
@@ -58,7 +58,7 @@ public class TableRow {
     private Optional<DataObject> findDataObject(String fieldName) {
         return fields
                 .stream()
-                .filter(dataObject -> dataObject.getValue().equals(fieldName))
+                .filter(dataObject -> dataObject.getFieldName().equals(fieldName))
                 .findFirst();
     }
 }

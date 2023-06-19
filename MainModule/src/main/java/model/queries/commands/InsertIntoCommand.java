@@ -1,11 +1,12 @@
 package model.queries.commands;
 
 import lombok.AllArgsConstructor;
+import model.data.DataHandler;
 
 @AllArgsConstructor
 public class InsertIntoCommand extends AbstractCommand implements IQueryCommand {
     @Override
-    public void executeCommand(String commandLine) {
-
+    public DataHandler executeCommand(String commandLine) {
+        return null;
     }
 }

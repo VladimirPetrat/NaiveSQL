@@ -7,19 +7,23 @@ import java.util.stream.Collectors;
 
 public class Table {
 
-    private DataHandler dataHandler;
-
     private final String errorId = "[ERROR] [Incorrect ID]";
     private final String errorArg = "[ERROR] [Incorrect rows in insert data package]";
-    private final String errorRws = "[ERROR] [Trying to reach an empty row]";
-
+    private DataHandler dataHandler;
     @Getter
     private HashSet<String> columnNames;
     private HashMap<String, TableRow> rows;
+    
+    private Table(){}
 
-    public Table(HashSet<String> columnNames) {
-        this.columnNames = columnNames;
-        rows = new HashMap<>();
+    public static Table create(HashSet<String> columnNames) {
+        Table table = new Table();
+        
+        table.verifyMultColumns(columnNames);
+        table.columnNames = columnNames;
+        table.rows = new HashMap<>();
+        
+        return table;
     }
 
     public String addNewRow(List<DataObject> dataPackage) {
@@ -29,6 +33,16 @@ public class Table {
         rows.put(id, new TableRow(dataPackage));
 
         return id;
+    }
+
+    public List<String> addNewRows(List<List<DataObject>> dataPackages) {
+        List<String> ids = new ArrayList<>();
+
+        for (List<DataObject> dataPackage : dataPackages) {
+            ids.add(addNewRow(dataPackage));
+        }
+
+        return ids;
     }
 
     public void addNewColumn(String columnName) {
@@ -43,34 +57,29 @@ public class Table {
     public DataObject getFieldValueObject(String Id, String fieldName) {
         verifyIdAndField(Id, fieldName);
 
-        return rows
-                .get(Id)
-                .getFieldDataObject(fieldName);
+        return rows.get(Id).getFieldDataObject(fieldName);
     }
 
     public List<DataObject> getFieldsForId(String id) {
         verifyField(id);
 
-        return rows
-                .get(id)
-                .getFields();
+        return rows.get(id).getFields();
     }
 
     public List<DataObject> getFieldsForColumnName(String columnName) {
-        return rows
-                .values()
-                .stream()
-                .map(value -> value.getFieldDataObject(columnName))
-                .collect(Collectors.toList());
+        verifyField(columnName);
+
+        return rows.values().stream().map(value -> value.getFieldDataObject(columnName)).collect(Collectors.toList());
     }
 
     public void insertRowFieldValues(String id, List<DataObject> dataPackage) {
+        verifyIdAndColumns(id, dataPackage);
+
         dataPackage.forEach(dataObject -> insertRowFieldValue(id, dataObject));
     }
 
     public void insertRowFieldValue(String id, DataObject dataObject) {
         verifyId(id);
-        verifyColumnNameCorrect(dataObject.getFieldName());
 
         rows.get(id).insertField(dataObject);
     }
@@ -82,20 +91,21 @@ public class Table {
     }
 
     public void removeRows(HashSet<String> ids) {
+        verifyMultIds(ids);
+
         ids.forEach(this::removeRow);
     }
 
     public void removeRowValue(String id, String fieldName) {
-        verifyColumnNameAndIdCorrect(id, fieldName);
+        verifyIdAndField(id, fieldName);
+
         rows.get(id).removeFieldValue(fieldName);
     }
 
     public void removeColumn(String columnName) {
         verifyColumnNameCorrect(columnName);
 
-        rows
-                .values()
-                .forEach(row -> row.removeField(columnName));
+        rows.values().forEach(row -> row.removeField(columnName));
     }
 
     public void removeColumns(HashSet<String> columnNames) {
@@ -105,26 +115,15 @@ public class Table {
     public void removeColumnValues(String columnName) {
         verifyColumnNameCorrect(columnName);
 
-        rows
-                .values()
-                .forEach(row -> row.removeFieldValue(columnName));
+        rows.values().forEach(row -> row.removeFieldValue(columnName));
     }
 
     public void removeColumnsValues(HashSet<String> columnNames) {
+        verifyMultColumns(columnNames);
+
         columnNames.forEach(this::removeColumnValues);
     }
 
-    private void verifyColumnNameAndIdCorrect(String columnName, String id) {
-        verifyColumnNameCorrect(columnName);
-        verifyId(id);
-    }
-
-    private void verifyRows(HashMap<String, TableRow> rows) {
-        Objects.requireNonNull(rows, "Rows cannot be null.");
-        if (rows.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] [Trying to reach an empty row]");
-        }
-    }
 
     private void verifyField(String arg) {
         if (arg.isEmpty()) {
@@ -138,6 +137,12 @@ public class Table {
         }
     }
 
+    private void verifyMultIds(HashSet<String> ids) {
+        if (ids.isEmpty() || !rows.keySet().containsAll(ids)) {
+            throw new IllegalArgumentException(errorId);
+        }
+    }
+
     private void verifyColumnNameCorrect(String columnName) {
         if (!columnNames.contains(columnName)) {
             throw new IllegalArgumentException(errorArg);
@@ -145,10 +150,14 @@ public class Table {
     }
 
     private void verifyColumnNamesCorrect(List<DataObject> dataPackage) {
-        List<String> fieldNames = dataPackage.stream()
-                .map(DataObject::getFieldName)
-                .toList();
+        Set<String> fieldNames = dataPackage.stream().map(DataObject::getFieldName).collect(Collectors.toSet());
         if (dataPackage.isEmpty() || !columnNames.containsAll(fieldNames)) {
+            throw new IllegalArgumentException(errorArg);
+        }
+    }
+
+    private void verifyMultColumns(HashSet<String> columnNames) {
+        if (columnNames.isEmpty() || !columnNames.containsAll(columnNames)) {
             throw new IllegalArgumentException(errorArg);
         }
     }

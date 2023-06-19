@@ -21,6 +21,8 @@ public class StartClass {
         Table table = new DataHandler().createNewTable("Table", set);
         String id = table.addNewRow(dataStructures);
 
+        System.out.println(table.getFieldsForId(id));
+
         DataObject an = new DataObject("name", "Andrew", String.class);
         DataObject an_age = new DataObject("age", 21, Integer.class);
 
@@ -31,6 +33,8 @@ public class StartClass {
 
         DataObject nameObject = table.getFieldValueObject(id, "name");
         String name = (String) nameObject.getType().cast(nameObject.getValue());
+
+        System.out.println(table.getFieldsForId(id));
 
         System.out.println(name);
         System.out.println(age);

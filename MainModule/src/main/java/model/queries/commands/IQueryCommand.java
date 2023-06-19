@@ -1,6 +1,7 @@
 package model.queries.commands;
 
-public interface IQueryCommand {
+import model.data.DataHandler;
 
-    void executeCommand(String commandLine);
+public interface IQueryCommand {
+    DataHandler executeCommand(String commandLine);
 }
